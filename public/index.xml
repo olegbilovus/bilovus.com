@@ -6,13 +6,5 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
             <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Tue, 28 Oct 2025 14:33:30 &#43;0100</lastBuildDate>
             <atom:link href="https://bilovus.com/index.xml" rel="self" type="application/rss+xml" />
-        <item>
-    <title>About Me</title>
-    <link>https://bilovus.com/posts/about_me/</link>
-    <pubDate>Tue, 28 Oct 2025 14:33:30 &#43;0100</pubDate>
-    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/posts/about_me/</guid>
-    <description><![CDATA[]]></description>
-</item>
-</channel>
+        </channel>
 </rss>
