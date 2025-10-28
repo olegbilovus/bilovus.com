@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: hugo-build
+        name: Run Hugo Build
+        entry: hugo build
+        language: system
+        files: '.*(md|html|toml|yaml|yml|json)$'
+        description: Build the Hugo site to ensure there are no build errors before committing.

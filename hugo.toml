@@ -41,6 +41,14 @@ languageName = "English"
     name = "Categories"
     url = "/categories/"
     title = ""
+  [[menu.main]]
+    weight = 4
+    identifier = "about"
+    pre = ""
+    post = ""
+    name = "About Me"
+    url = "/about/"
+    title = ""
 
 # Markup related configuration in Hugo
 [markup]
@@ -82,8 +90,8 @@ languageName = "English"
   # 作者配置
   [params.author]
     name = "Oleg Bilovus"
-    email = "contact[at]bilovus.com"
-    link = "https://bilovus.com"
+    email = "contact@bilovus.com"
+    link = "https://bilovus.com/about/"
 
   # Header config
   # 页面头部导航栏配置
@@ -137,7 +145,7 @@ languageName = "English"
     icp = ""
     # license info (HTML format is supported)
     # 许可协议信息 (支持 HTML 格式)
-    license= "Creative Commons Attribution-NonCommercial 4.0 International License"
+    license= "<a href=\"https://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY-NC 4.0</a>"
 
   # Section (all posts) page config
   # Section (所有文章) 页面配置
