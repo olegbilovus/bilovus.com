@@ -90,7 +90,7 @@ languageName = "English"
   # 作者配置
   [params.author]
     name = "Oleg Bilovus"
-    email = "contact@bilovus.com"
+    email = "contact[at]bilovus.com"
     link = "https://bilovus.com/about/"
 
   # Header config
