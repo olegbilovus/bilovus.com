@@ -4,7 +4,15 @@
         <link>https://bilovus.com/</link>
         <description>A tech blog where I share my knowledge and experiences on programming, web development, and technology.</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Tue, 28 Oct 2025 14:33:30 &#43;0100</lastBuildDate>
+            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</lastBuildDate>
             <atom:link href="https://bilovus.com/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+        <item>
+    <title>Capture Network Traffic on Mobile Devices</title>
+    <link>https://bilovus.com/posts/capture_network_mobile/</link>
+    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
+    <guid>https://bilovus.com/posts/capture_network_mobile/</guid>
+    <description><![CDATA[A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods.]]></description>
+</item>
+</channel>
 </rss>

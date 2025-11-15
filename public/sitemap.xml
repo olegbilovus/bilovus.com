@@ -2,7 +2,19 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://bilovus.com/about/</loc><lastmod>2025-10-28T14:33:30&#43;01:00</lastmod></url><url>
-            <loc>https://bilovus.com/</loc><lastmod>2025-10-28T14:33:30&#43;01:00</lastmod></url><url>
-            <loc>https://bilovus.com/categories/</loc></url><url>
-            <loc>https://bilovus.com/tags/</loc></url></urlset>
+            <loc>https://bilovus.com/tags/android/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/posts/capture_network_mobile/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/categories/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/https-decryption/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/mitmproxy/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/categories/mobile/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/network-capture/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/categories/networking/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/openwrt/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/pcapdroid/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/posts/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/tcpdump/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/tags/wireshark/</loc><lastmod>2025-11-15T18:21:02&#43;01:00</lastmod></url><url>
+            <loc>https://bilovus.com/about/</loc><lastmod>2025-10-28T14:33:30&#43;01:00</lastmod></url></urlset>
