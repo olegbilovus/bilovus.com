@@ -1,6 +1,6 @@
 ---
 date: "2025-11-15T18:21:02+01:00"
-lastmod: "2025-11-15T18:21:02+01:00"
+lastmod: "2026-01-20T16:13:10+01:00"
 draft: false
 categories: ["Android", "Networking", "Security"]
 tags: ["network-capture", "packet-analysis", "tcpdump", "wireshark", "openwrt", "mitmproxy", "pcapdroid", "https-decryption", "port-mirroring", "vpn", "traffic-monitoring", "IoT"]
