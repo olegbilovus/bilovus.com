@@ -5,7 +5,9 @@ draft: false
 title: "About Me"
 ---
 
-Welcome to my personal website! I'm Oleg Bilovus, a Computer Science student at the [University of Salerno](https://www.unisa.it/) in Italy. I finished my Bachelor's degree in Computer Science in 2023 and am currently pursuing my Master's degree in Computer Science -- focusing on Cloud Computing. I will graduate in December 2025.
+Welcome to my personal website! I'm Oleg Bilovus. I finished my Master of Science degree in Computer Science at the [University of Salerno](https://www.unisa.it/en/) in Italy on December 2025 and my Bachelor of Science degree in Computer Science at same university in 2023.
+
+I am passionate about technology, programming, and computer science in general. I enjoy learning new things and sharing niche technical knowledge with others through writing.
 
 ## About This Website
 
@@ -16,7 +18,7 @@ With time, I will add more information about myself, my projects, and my interes
 
 ## What I am currently doing
 
-- Finishing my thesis for my Master's degree in Computer Science at the University of Salerno, Italy.
-- Studying Rust
+- Started my first job experience with an Internship at _Accenture Italy_.
+- Studying the Spring Framework for Java development.
 - Improving my knowledge in Golang
 - Learning more about Cloud Computing theory and practices, a special thanks to [John Savill](https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ) for his amazing content on the topic.
