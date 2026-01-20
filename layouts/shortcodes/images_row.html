@@ -1,0 +1,16 @@
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0;">
+    {{- $sources := split (.Get "src") "," -}}
+    {{- $captions := split (.Get "captions") "|" -}}
+    {{- range $index, $src := $sources -}}
+    {{- $src := trim . " " -}}
+    {{- $caption := index $captions $index | default "" -}}
+    <div style="flex: 1; min-width: 200px; max-width: {{ $.Get "width" | default "300px" }};">
+        <a class="lightgallery" href="{{ $src }}" data-thumbnail="{{ $src }}"{{ with $caption }} title="{{ trim . " " }}" data-sub-html="<h2>{{ trim . " " }}</h2>"{{ end }}>
+            <img style="width: 100%; height: auto; display: block;" src="{{ $src }}" alt="{{ trim $caption " " }}" decoding="async" />
+        </a>
+        {{- with $caption -}}
+        <p style="text-align: center; font-style: italic; margin-top: 0.5rem; color: #666;">{{ trim . " " }}</p>
+        {{- end -}}
+    </div>
+    {{- end -}}
+</div>

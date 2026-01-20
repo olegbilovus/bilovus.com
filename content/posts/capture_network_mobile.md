@@ -1,57 +1,57 @@
 ---
 date: "2025-11-15T18:21:02+01:00"
-lastmod: "2025-11-15T18:21:02+01:00"
+lastmod: "2026-01-20T16:13:10+01:00"
 draft: false
-categories: ["networking", "mobile"]
-tags: ["network capture", "android", "tcpdump", "wireshark", "openwrt", "mitmproxy", "pcapdroid", "https decryption"]
+categories: ["Android", "Networking", "Security"]
+tags: ["network-capture", "packet-analysis", "tcpdump", "wireshark", "openwrt", "mitmproxy", "pcapdroid", "https-decryption", "port-mirroring", "vpn", "traffic-monitoring", "IoT"]
 title: "Capture Network Traffic on Mobile Devices"
-summary: "A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods."
+summary: "A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark."
 ---
 
-Capturing network traffic on mobile devices can be challenging at first, but with the right tools and methods, it becomes quite easy and extendable to other devices such as IoT devices. In this post, the focus will be on Android devices.
+Capturing network traffic on mobile devices presents initial challenges, but appropriate tools and methods make the process straightforward and applicable to other devices such as IoT devices. This post focuses on Android devices.
 
-The capture can be done in an invasive way, where the system or applications are aware of the capture process, or in a non-invasive way, where the capture is done externally without modifying the device or applications.
+Capture can be performed using an invasive approach, where the system or applications are aware of the capture process, or a non-invasive approach, where capture occurs externally without modifying the device or applications.
 
 ## Invasive Method
 
-The Invasive Method means that the applications we want to monitor will be aware of the capture process. If we are also monitoring power consumption or hardware usage, this method will introduce some overhead due to the additional application running on the device.
+With the Invasive Method, the applications being monitored can be aware of the capture process. When monitoring power consumption or hardware usage, this method introduces overhead due to the additional application running on the device.
 
 ### Packet Capture Application
 
-One of the most popular open-source applications is [PCAPdroid](https://play.google.com/store/apps/details?id=com.emanuelef.remote_capture), which allows capturing network traffic without root access. It creates a local VPN on the device, capturing all network traffic.
+One popular open-source application is [PCAPdroid](https://play.google.com/store/apps/details?id=com.emanuelef.remote_capture), which enables capturing network traffic without root access. It creates a local VPN on the device to capture all network traffic.
 
-There are some limitations when using this method:
+This method has several limitations:
 
 - Some applications may not work properly when a VPN is active.
 - The length of each captured frame packet can be inaccurate for some analysis; sometimes it may not show the single fragmented TCP packets but the reassembled packets as one.
-- There is no guarantee that all traffic is captured; some system applications may use techniques to bypass the VPN.
+- Not all traffic is guaranteed to be captured; some system applications may use techniques to bypass the VPN.
 - ARP and other link-layer protocols are not captured; only IP traffic is captured.
 
-However, for most use cases, this method is sufficient and easy to set up. PCAPdroid also allows capturing only specific applications, which can help reduce the amount of data captured.
+For most use cases, this method provides adequate coverage and straightforward setup. PCAPdroid also supports capturing traffic from specific applications, which reduces the amount of data captured.
 
 ### Proxy
 
-In my opinion, using a proxy is still an invasive method, as the applications being monitored and the system are aware of the proxy settings because it has to be configured on the device.
+Using a proxy constitutes an invasive method, as the applications being monitored and the system are aware of the proxy settings due to the required device configuration.
 
-A proxy could be set up at the router level instead of the device level, but this could still be detected[^1].
+A proxy can be configured at the router level instead of the device level, but this configuration may still be detected[^1].
 
-The most popular proxy is [Mitmproxy](https://mitmproxy.org/), which allows capturing and modifying network traffic. It can be used to capture HTTP and HTTPS traffic, as well as other protocols.
+A commonly used proxy is [Mitmproxy](https://mitmproxy.org/), which enables capturing and modifying network traffic. It supports HTTP and HTTPS traffic, as well as other protocols.
 
 ## Non-Invasive Method
 
-The Non-Invasive Method means that the applications and the system are not aware of the capture process. This method is more reliable as it does not introduce any overhead on the device. This method can be used for monitoring any device on the network, not just mobile devices.
+The non-invasive method ensures that the applications and the system remain unaware of the capture process. This approach avoids introducing overhead on the device and can be applied to any network device, not just mobile devices.
 
-The main advantage of this method is that it can capture all traffic, including ARP and other link-layer protocols. However, it cannot capture data from a single application, as it captures all traffic on the network.
+The primary advantage of this method is its ability to capture all traffic, including ARP and other link-layer protocols. However, it cannot isolate traffic from a single application, as it captures all traffic on the network.
 
 ### OpenWRT Router with Tcpdump
 
-The most reliable way to capture network traffic from mobile devices is to use a router with OpenWRT firmware and Tcpdump installed. This method allows capturing all traffic on the network, including ARP and other link-layer protocols.
+A reliable method for capturing network traffic from mobile devices involves using a router with OpenWRT firmware and Tcpdump installed. This approach enables capturing all traffic on the network, including ARP and other link-layer protocols.
 
-With Tcpdump, it is possible to capture traffic from specific devices by filtering based on MAC or IP addresses.
+Tcpdump supports capturing traffic from specific devices by filtering based on MAC or IP addresses.
 
-There are multiple devices that support OpenWRT firmware, and some come out of the box with OpenWRT, such as [GL.iNet routers](https://www.gl-inet.com/). The main limitation of this method is the storage space on the router, as capturing all traffic can quickly fill it up. The capture can be done remotely with SSH, but the GL.iNet routers also support USB and/or SD card storage expansion.
+Multiple devices support OpenWRT firmware, and some ship with OpenWRT pre-installed, such as [GL.iNet routers](https://www.gl-inet.com/). The primary limitation of this method is the storage space on the router, as capturing all traffic can quickly consume available space. Capture can be performed remotely via SSH, and GL.iNet routers support USB and/or SD card storage expansion.
 
-To capture for a long time, it is better to write a system service that also manages its lifecycle in case of failure.
+For extended capture sessions, implementing a system service that manages its lifecycle in case of failure is recommended.
 
 Below is an example of a service file saved as `/etc/init.d/tcpdump_capture`:
 
@@ -97,9 +97,9 @@ echo $out
 /usr/sbin/tcpdump -i wlan0 -n -w $out host 192.168.0.10 or ether host xx:xx:xx:xx:xx:xx
 ```
 
-The above script captures all traffic from a specific device on the network, based on its IP or MAC address, and saves it to an external SD card in pcap format.
+This script captures all traffic from a specific device on the network, based on its IP or MAC address, and saves it to an external SD card in pcap format.
 
-Sometimes it is desirable to view the captured traffic in real time. For this purpose, it is possible to pipe the latest captured pcap file to Wireshark running on a remote machine:
+For real-time traffic viewing, the latest captured pcap file can be piped to Wireshark running on a remote machine:
 
 ```bash
 eval $(ssh-agent -s)     # Start the SSH agent
@@ -109,30 +109,30 @@ ssh-add .ssh/gl_axt1800  # Add the private key for authentication
 ssh -i .ssh/gl_axt1800 root@192.168.8.1 "tail -n +1 -f /tmp/mountd/disk1_part1/pcap/\$(ls -t /tmp/mountd/disk1_part1/pcap/ | head -n 1)" | wireshark -k -i -
 ```
 
-The above commands start an SSH session to the router, tail the latest pcap file, and pipe it to Wireshark running on the local machine for real-time viewing. It is recommended to use ssh-agent to avoid entering the password multiple times. If the agent is not used, the last command will not work until the password is entered.
+These commands establish an SSH session to the router, tail the latest pcap file, and pipe it to Wireshark running on the local machine for real-time viewing. Using ssh-agent avoids entering the password multiple times. Without the agent, the last command requires password entry.
 
 ### Port Mirroring / SPAN
 
-If a router with OpenWRT is not an option, another way to capture network traffic is to use a managed switch with port mirroring or SPAN (Switched Port Analyzer) feature. This method allows capturing all traffic from a specific port on the switch and sending it to another port where a capture device is connected.
+When a router with OpenWRT is not available, network traffic can be captured using a managed switch with port mirroring or SPAN (Switched Port Analyzer) functionality. This method captures all traffic from a specific port on the switch and forwards it to another port where a capture device is connected.
 
-{{< center_image src="/images/posts/capture_network_mobile/port_mirroring.png" alt="Port Mirroring" caption="Port Mirroring" >}}
+{{< center_image src="/images/posts/capture_network_mobile/port_mirroring.png" alt="Port Mirroring" caption="Port Mirroring" width="700px" >}}
 
-There are very cheap managed switches that support port mirroring, such as the TP-Link switches. The setup is quite simple, but care must be taken to avoid creating loops in the network or duplicating traffic.
+Affordable managed switches supporting port mirroring are available, such as TP-Link switches. While the setup is straightforward, care must be taken to avoid creating network loops or duplicating traffic.
 
 ### Throwing Star LAN Tap
 
-Another option to capture network traffic is to use a LAN Tap. These devices can be purchased or built at home. A LAN Tap is a device that sits between the device being monitored and the network, allowing you to capture all traffic without modifying the device or the network. An example of a LAN Tap is the [Throwing Star LAN Tap](https://greatscottgadgets.com/throwingstar/) from Great Scott Gadgets.
+Network traffic can also be captured using a LAN Tap. These devices can be purchased or built. A LAN Tap is positioned between the monitored device and the network, enabling traffic capture without modifying the device or network. The [Throwing Star LAN Tap](https://greatscottgadgets.com/throwingstar/) from Great Scott Gadgets is one example of such a device.
 
 {{< center_image src="/images/posts/capture_network_mobile/throwing_star_lan.png" alt="Throwing Star LAN Tap" >}}
 
 ## Decrypting HTTPS Traffic
 
-When capturing network traffic, most of it will be encrypted using HTTPS. To decrypt HTTPS traffic, it is necessary to install a custom root certificate on the device being monitored. This can be done by exporting the certificate from the capture tool (e.g., Mitmproxy) and installing it on the device.
+Most captured network traffic is encrypted using HTTPS. To decrypt HTTPS traffic, a custom root certificate must be installed on the monitored device. This can be accomplished by exporting the certificate from the capture tool (e.g., Mitmproxy) and installing it on the device.
 
-With recent versions of Android, it is necessary to configure applications to trust user-installed certificates, as by default they only trust system-installed certificates. This can be done by modifying the network security configuration of the application with tools like [apk-mitm](https://github.com/niklashigi/apk-mitm).
+Recent Android versions require applications to be configured to trust user-installed certificates, as they only trust system-installed certificates by default. This configuration can be achieved by modifying the application's network security configuration using tools like [apk-mitm](https://github.com/niklashigi/apk-mitm).
 
-If the device is rooted, it is possible to install the custom root certificate as a system certificate, which will be trusted by all applications, or use tools like [Magisk Trust User Certs](https://github.com/NVISOsecurity/MagiskTrustUserCerts), which simplify the process.
+On rooted devices, the custom root certificate can be installed as a system certificate, which will be trusted by all applications. Alternatively, tools like [Magisk Trust User Certs](https://github.com/NVISOsecurity/MagiskTrustUserCerts) simplify this process.
 
 ## Bibliography
 
-[^1]: Towards Aggregated Features: A Novel Proxy Detection Method Using NetFlow Data," 2020 IEEE 22nd International Conference on High Performance Computing and Communications\_, pp. 409-416, 2020. [IEEE Xplore](https://ieeexplore.ieee.org/document/9408011)
+[^1]: "Towards Aggregated Features: A Novel Proxy Detection Method Using NetFlow Data," 2020 IEEE 22nd International Conference on High Performance Computing and Communications, pp. 409-416, 2020. [IEEE Xplore](https://ieeexplore.ieee.org/document/9408011)

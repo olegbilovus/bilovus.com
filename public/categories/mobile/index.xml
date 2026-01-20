@@ -1,16 +1,1 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Mobile - Category - Oleg Bilovus&#39;s Tech Blog</title>
-        <link>https://bilovus.com/categories/mobile/</link>
-        <description>Mobile - Category - Oleg Bilovus&#39;s Tech Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/categories/mobile/" rel="self" type="application/rss+xml" /><item>
-    <title>Capture Network Traffic on Mobile Devices</title>
-    <link>https://bilovus.com/posts/capture_network_mobile/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
-    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/posts/capture_network_mobile/</guid>
-    <description><![CDATA[A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods.]]></description>
-</item>
-</channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Mobile - Category - Oleg Bilovus's Tech Blog</title><link>http://localhost:1313/categories/mobile/</link><description>Mobile - Category - Oleg Bilovus's Tech Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor><webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><atom:link href="http://localhost:1313/categories/mobile/" rel="self" type="application/rss+xml"/></channel></rss>

@@ -4,13 +4,21 @@
         <link>https://bilovus.com/posts/</link>
         <description>All Posts | Oleg Bilovus&#39;s Tech Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Secure Offline Data Storage on Wear OS Using Steganography</title>
+    <link>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
+    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
+    <guid>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</guid>
+    <description><![CDATA[A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.]]></description>
+</item>
+<item>
     <title>Capture Network Traffic on Mobile Devices</title>
     <link>https://bilovus.com/posts/capture_network_mobile/</link>
     <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
     <guid>https://bilovus.com/posts/capture_network_mobile/</guid>
-    <description><![CDATA[A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods.]]></description>
+    <description><![CDATA[A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark.]]></description>
 </item>
 </channel>
 </rss>
