@@ -18,7 +18,7 @@ With time, I will add more information about myself, my projects, and my interes
 
 ## What I am currently doing
 
-- Started my first job experience with an Internship at _Accenture Italy_.
+- Started my first job experience with an Internship.
 - Studying the Spring Framework for Java development.
 - Improving my knowledge in Golang
 - Learning more about Cloud Computing theory and practices, a special thanks to [John Savill](https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ) for his amazing content on the topic.
