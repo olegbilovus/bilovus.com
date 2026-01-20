@@ -1,3 +1,8 @@
 <div class="center">
-    <img style="display: block; margin-left: auto; margin-right: auto; width: 50%" src="{{ .Get "src" }}" alt="{{ .Get "alt" }}" decoding="async" />
+    <a class="lightgallery" href="{{ .Get "src" }}" title="{{ .Get "alt" }}" data-thumbnail="{{ .Get "src" }}"{{ with .Get "alt" }} data-sub-html="<h2>{{ . }}</h2>"{{ end }}>
+        <img style="display: block; margin-left: auto; margin-right: auto; width: {{ .Get "width" | default "250px" }}" src="{{ .Get "src" }}" alt="{{ .Get "alt" }}" decoding="async" />
+    </a>
+    {{- with .Get "alt" -}}
+    <p style="text-align: center; font-style: italic; margin-top: 0.5rem; color: #666;">{{ . }}</p>
+    {{- end -}}
 </div>

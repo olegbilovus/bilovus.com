@@ -7,14 +7,14 @@
         <title>Capture Network Traffic on Mobile Devices - Oleg Bilovus&#39;s Tech Blog</title><meta name="Description" content="A tech blog where I share my knowledge and experiences on programming, web development, and technology."><meta property="og:url" content="https://bilovus.com/posts/capture_network_mobile/">
   <meta property="og:site_name" content="Oleg Bilovus&#39;s Tech Blog">
   <meta property="og:title" content="Capture Network Traffic on Mobile Devices">
-  <meta property="og:description" content="A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods.">
+  <meta property="og:description" content="A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-11-15T18:21:02+01:00">
     <meta property="article:modified_time" content="2025-11-15T18:21:02+01:00">
-    <meta property="article:tag" content="Network Capture">
-    <meta property="article:tag" content="Android">
+    <meta property="article:tag" content="Network-Capture">
+    <meta property="article:tag" content="Packet-Analysis">
     <meta property="article:tag" content="Tcpdump">
     <meta property="article:tag" content="Wireshark">
     <meta property="article:tag" content="Openwrt">
@@ -22,12 +22,12 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Capture Network Traffic on Mobile Devices">
-  <meta name="twitter:description" content="A guide on capturing network traffic on mobile devices using both invasive and non-invasive methods.">
+  <meta name="twitter:description" content="A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark.">
 <meta name="application-name" content="Oleg Bilovus&#39;s Tech Blog">
 <meta name="apple-mobile-web-app-title" content="Oleg Bilovus&#39;s Tech Blog">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://bilovus.com/posts/capture_network_mobile/" /><link rel="stylesheet" href="/css/style.min.c935ac3e67aabf8ffa880ec9a72bbd0fe11259f5ae50cb70025e417a80015536.css" integrity="sha256-yTWsPmeqv4/6iA7Jpyu9D+ESWfWuUMtwAl5BeoABVTY="><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://bilovus.com/posts/capture_network_mobile/" /><link rel="next" href="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" /><link rel="stylesheet" href="/css/style.min.c935ac3e67aabf8ffa880ec9a72bbd0fe11259f5ae50cb70025e417a80015536.css" integrity="sha256-yTWsPmeqv4/6iA7Jpyu9D+ESWfWuUMtwAl5BeoABVTY="><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/bilovus.com\/posts\/capture_network_mobile\/"
-        },"genre": "posts","keywords": "network capture, android, tcpdump, wireshark, openwrt, mitmproxy, pcapdroid, https decryption","wordcount":  1212 ,
+        },"genre": "posts","keywords": "network-capture, packet-analysis, tcpdump, wireshark, openwrt, mitmproxy, pcapdroid, https-decryption, port-mirroring, vpn, traffic-monitoring, IoT","wordcount":  1078 ,
         "url": "https:\/\/bilovus.com\/posts\/capture_network_mobile\/","datePublished": "2025-11-15T18:21:02+01:00","dateModified": "2025-11-15T18:21:02+01:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -104,8 +104,8 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Capture Network Traffic on Mobile Devices</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://bilovus.com/about/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Oleg Bilovus</a></span>&nbsp;<span class="post-category">included in <a href="/categories/networking/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Networking</a>&nbsp;<a href="/categories/mobile/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Mobile</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-15">2025-11-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1212 words&nbsp;
+            <div class="post-meta-line"><span class="post-author"><a href="https://bilovus.com/about/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Oleg Bilovus</a></span>&nbsp;<span class="post-category">included in <a href="/categories/android/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Android</a>&nbsp;<a href="/categories/networking/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Networking</a>&nbsp;<a href="/categories/security/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Security</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-15">2025-11-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1078 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -131,32 +131,32 @@
     <li><a href="#bibliography">Bibliography</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>Capturing network traffic on mobile devices can be challenging at first, but with the right tools and methods, it becomes quite easy and extendable to other devices such as IoT devices. In this post, the focus will be on Android devices.</p>
-<p>The capture can be done in an invasive way, where the system or applications are aware of the capture process, or in a non-invasive way, where the capture is done externally without modifying the device or applications.</p>
+            </div><div class="content" id="content"><p>Capturing network traffic on mobile devices presents initial challenges, but appropriate tools and methods make the process straightforward and applicable to other devices such as IoT devices. This post focuses on Android devices.</p>
+<p>Capture can be performed using an invasive approach, where the system or applications are aware of the capture process, or a non-invasive approach, where capture occurs externally without modifying the device or applications.</p>
 <h2 id="invasive-method">Invasive Method</h2>
-<p>The Invasive Method means that the applications we want to monitor will be aware of the capture process. If we are also monitoring power consumption or hardware usage, this method will introduce some overhead due to the additional application running on the device.</p>
+<p>With the Invasive Method, the applications being monitored can be aware of the capture process. When monitoring power consumption or hardware usage, this method introduces overhead due to the additional application running on the device.</p>
 <h3 id="packet-capture-application">Packet Capture Application</h3>
-<p>One of the most popular open-source applications is <a href="https://play.google.com/store/apps/details?id=com.emanuelef.remote_capture" target="_blank" rel="noopener noreffer ">PCAPdroid</a>, which allows capturing network traffic without root access. It creates a local VPN on the device, capturing all network traffic.</p>
-<p>There are some limitations when using this method:</p>
+<p>One popular open-source application is <a href="https://play.google.com/store/apps/details?id=com.emanuelef.remote_capture" target="_blank" rel="noopener noreffer ">PCAPdroid</a>, which enables capturing network traffic without root access. It creates a local VPN on the device to capture all network traffic.</p>
+<p>This method has several limitations:</p>
 <ul>
 <li>Some applications may not work properly when a VPN is active.</li>
 <li>The length of each captured frame packet can be inaccurate for some analysis; sometimes it may not show the single fragmented TCP packets but the reassembled packets as one.</li>
-<li>There is no guarantee that all traffic is captured; some system applications may use techniques to bypass the VPN.</li>
+<li>Not all traffic is guaranteed to be captured; some system applications may use techniques to bypass the VPN.</li>
 <li>ARP and other link-layer protocols are not captured; only IP traffic is captured.</li>
 </ul>
-<p>However, for most use cases, this method is sufficient and easy to set up. PCAPdroid also allows capturing only specific applications, which can help reduce the amount of data captured.</p>
+<p>For most use cases, this method provides adequate coverage and straightforward setup. PCAPdroid also supports capturing traffic from specific applications, which reduces the amount of data captured.</p>
 <h3 id="proxy">Proxy</h3>
-<p>In my opinion, using a proxy is still an invasive method, as the applications being monitored and the system are aware of the proxy settings because it has to be configured on the device.</p>
-<p>A proxy could be set up at the router level instead of the device level, but this could still be detected<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<p>The most popular proxy is <a href="https://mitmproxy.org/" target="_blank" rel="noopener noreffer ">Mitmproxy</a>, which allows capturing and modifying network traffic. It can be used to capture HTTP and HTTPS traffic, as well as other protocols.</p>
+<p>Using a proxy constitutes an invasive method, as the applications being monitored and the system are aware of the proxy settings due to the required device configuration.</p>
+<p>A proxy can be configured at the router level instead of the device level, but this configuration may still be detected<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>A commonly used proxy is <a href="https://mitmproxy.org/" target="_blank" rel="noopener noreffer ">Mitmproxy</a>, which enables capturing and modifying network traffic. It supports HTTP and HTTPS traffic, as well as other protocols.</p>
 <h2 id="non-invasive-method">Non-Invasive Method</h2>
-<p>The Non-Invasive Method means that the applications and the system are not aware of the capture process. This method is more reliable as it does not introduce any overhead on the device. This method can be used for monitoring any device on the network, not just mobile devices.</p>
-<p>The main advantage of this method is that it can capture all traffic, including ARP and other link-layer protocols. However, it cannot capture data from a single application, as it captures all traffic on the network.</p>
+<p>The non-invasive method ensures that the applications and the system remain unaware of the capture process. This approach avoids introducing overhead on the device and can be applied to any network device, not just mobile devices.</p>
+<p>The primary advantage of this method is its ability to capture all traffic, including ARP and other link-layer protocols. However, it cannot isolate traffic from a single application, as it captures all traffic on the network.</p>
 <h3 id="openwrt-router-with-tcpdump">OpenWRT Router with Tcpdump</h3>
-<p>The most reliable way to capture network traffic from mobile devices is to use a router with OpenWRT firmware and Tcpdump installed. This method allows capturing all traffic on the network, including ARP and other link-layer protocols.</p>
-<p>With Tcpdump, it is possible to capture traffic from specific devices by filtering based on MAC or IP addresses.</p>
-<p>There are multiple devices that support OpenWRT firmware, and some come out of the box with OpenWRT, such as <a href="https://www.gl-inet.com/" target="_blank" rel="noopener noreffer ">GL.iNet routers</a>. The main limitation of this method is the storage space on the router, as capturing all traffic can quickly fill it up. The capture can be done remotely with SSH, but the GL.iNet routers also support USB and/or SD card storage expansion.</p>
-<p>To capture for a long time, it is better to write a system service that also manages its lifecycle in case of failure.</p>
+<p>A reliable method for capturing network traffic from mobile devices involves using a router with OpenWRT firmware and Tcpdump installed. This approach enables capturing all traffic on the network, including ARP and other link-layer protocols.</p>
+<p>Tcpdump supports capturing traffic from specific devices by filtering based on MAC or IP addresses.</p>
+<p>Multiple devices support OpenWRT firmware, and some ship with OpenWRT pre-installed, such as <a href="https://www.gl-inet.com/" target="_blank" rel="noopener noreffer ">GL.iNet routers</a>. The primary limitation of this method is the storage space on the router, as capturing all traffic can quickly consume available space. Capture can be performed remotely via SSH, and GL.iNet routers support USB and/or SD card storage expansion.</p>
+<p>For extended capture sessions, implementing a system service that manages its lifecycle in case of failure is recommended.</p>
 <p>Below is an example of a service file saved as <code>/etc/init.d/tcpdump_capture</code>:</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
@@ -204,8 +204,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$out</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">/usr/sbin/tcpdump -i wlan0 -n -w <span class="nv">$out</span> host 192.168.0.10 or ether host xx:xx:xx:xx:xx:xx</span></span></code></pre></div></div>
-<p>The above script captures all traffic from a specific device on the network, based on its IP or MAC address, and saves it to an external SD card in pcap format.</p>
-<p>Sometimes it is desirable to view the captured traffic in real time. For this purpose, it is possible to pipe the latest captured pcap file to Wireshark running on a remote machine:</p>
+<p>This script captures all traffic from a specific device on the network, based on its IP or MAC address, and saves it to an external SD card in pcap format.</p>
+<p>For real-time traffic viewing, the latest captured pcap file can be piped to Wireshark running on a remote machine:</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
@@ -216,30 +216,32 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># SSH into the router, tail the latest pcap file, and pipe it to Wireshark</span>
 </span></span><span class="line"><span class="cl">ssh -i .ssh/gl_axt1800 root@192.168.8.1 <span class="s2">&#34;tail -n +1 -f /tmp/mountd/disk1_part1/pcap/\$(ls -t /tmp/mountd/disk1_part1/pcap/ | head -n 1)&#34;</span> <span class="p">|</span> wireshark -k -i -</span></span></code></pre></div></div>
-<p>The above commands start an SSH session to the router, tail the latest pcap file, and pipe it to Wireshark running on the local machine for real-time viewing. It is recommended to use ssh-agent to avoid entering the password multiple times. If the agent is not used, the last command will not work until the password is entered.</p>
+<p>These commands establish an SSH session to the router, tail the latest pcap file, and pipe it to Wireshark running on the local machine for real-time viewing. Using ssh-agent avoids entering the password multiple times. Without the agent, the last command requires password entry.</p>
 <h3 id="port-mirroring--span">Port Mirroring / SPAN</h3>
-<p>If a router with OpenWRT is not an option, another way to capture network traffic is to use a managed switch with port mirroring or SPAN (Switched Port Analyzer) feature. This method allows capturing all traffic from a specific port on the switch and sending it to another port where a capture device is connected.</p>
+<p>When a router with OpenWRT is not available, network traffic can be captured using a managed switch with port mirroring or SPAN (Switched Port Analyzer) functionality. This method captures all traffic from a specific port on the switch and forwards it to another port where a capture device is connected.</p>
 <div class="center">
-    <img style="display: block; margin-left: auto; margin-right: auto; width: 50%" src="/images/posts/capture_network_mobile/port_mirroring.png" alt="Port Mirroring" decoding="async" />
-</div>
+    <a class="lightgallery" href="/images/posts/capture_network_mobile/port_mirroring.png" title="Port Mirroring" data-thumbnail="/images/posts/capture_network_mobile/port_mirroring.png" data-sub-html="<h2>Port Mirroring</h2>">
+        <img style="display: block; margin-left: auto; margin-right: auto; width: 700px" src="/images/posts/capture_network_mobile/port_mirroring.png" alt="Port Mirroring" decoding="async" />
+    </a><p style="text-align: center; font-style: italic; margin-top: 0.5rem; color: #666;">Port Mirroring</p></div>
 
-<p>There are very cheap managed switches that support port mirroring, such as the TP-Link switches. The setup is quite simple, but care must be taken to avoid creating loops in the network or duplicating traffic.</p>
+<p>Affordable managed switches supporting port mirroring are available, such as TP-Link switches. While the setup is straightforward, care must be taken to avoid creating network loops or duplicating traffic.</p>
 <h3 id="throwing-star-lan-tap">Throwing Star LAN Tap</h3>
-<p>Another option to capture network traffic is to use a LAN Tap. These devices can be purchased or built at home. A LAN Tap is a device that sits between the device being monitored and the network, allowing you to capture all traffic without modifying the device or the network. An example of a LAN Tap is the <a href="https://greatscottgadgets.com/throwingstar/" target="_blank" rel="noopener noreffer ">Throwing Star LAN Tap</a> from Great Scott Gadgets.</p>
+<p>Network traffic can also be captured using a LAN Tap. These devices can be purchased or built. A LAN Tap is positioned between the monitored device and the network, enabling traffic capture without modifying the device or network. The <a href="https://greatscottgadgets.com/throwingstar/" target="_blank" rel="noopener noreffer ">Throwing Star LAN Tap</a> from Great Scott Gadgets is one example of such a device.</p>
 <div class="center">
-    <img style="display: block; margin-left: auto; margin-right: auto; width: 50%" src="/images/posts/capture_network_mobile/throwing_star_lan.png" alt="Throwing Star LAN Tap" decoding="async" />
-</div>
+    <a class="lightgallery" href="/images/posts/capture_network_mobile/throwing_star_lan.png" title="Throwing Star LAN Tap" data-thumbnail="/images/posts/capture_network_mobile/throwing_star_lan.png" data-sub-html="<h2>Throwing Star LAN Tap</h2>">
+        <img style="display: block; margin-left: auto; margin-right: auto; width: 250px" src="/images/posts/capture_network_mobile/throwing_star_lan.png" alt="Throwing Star LAN Tap" decoding="async" />
+    </a><p style="text-align: center; font-style: italic; margin-top: 0.5rem; color: #666;">Throwing Star LAN Tap</p></div>
 
 <h2 id="decrypting-https-traffic">Decrypting HTTPS Traffic</h2>
-<p>When capturing network traffic, most of it will be encrypted using HTTPS. To decrypt HTTPS traffic, it is necessary to install a custom root certificate on the device being monitored. This can be done by exporting the certificate from the capture tool (e.g., Mitmproxy) and installing it on the device.</p>
-<p>With recent versions of Android, it is necessary to configure applications to trust user-installed certificates, as by default they only trust system-installed certificates. This can be done by modifying the network security configuration of the application with tools like <a href="https://github.com/niklashigi/apk-mitm" target="_blank" rel="noopener noreffer ">apk-mitm</a>.</p>
-<p>If the device is rooted, it is possible to install the custom root certificate as a system certificate, which will be trusted by all applications, or use tools like <a href="https://github.com/NVISOsecurity/MagiskTrustUserCerts" target="_blank" rel="noopener noreffer ">Magisk Trust User Certs</a>, which simplify the process.</p>
+<p>Most captured network traffic is encrypted using HTTPS. To decrypt HTTPS traffic, a custom root certificate must be installed on the monitored device. This can be accomplished by exporting the certificate from the capture tool (e.g., Mitmproxy) and installing it on the device.</p>
+<p>Recent Android versions require applications to be configured to trust user-installed certificates, as they only trust system-installed certificates by default. This configuration can be achieved by modifying the application&rsquo;s network security configuration using tools like <a href="https://github.com/niklashigi/apk-mitm" target="_blank" rel="noopener noreffer ">apk-mitm</a>.</p>
+<p>On rooted devices, the custom root certificate can be installed as a system certificate, which will be trusted by all applications. Alternatively, tools like <a href="https://github.com/NVISOsecurity/MagiskTrustUserCerts" target="_blank" rel="noopener noreffer ">Magisk Trust User Certs</a> simplify this process.</p>
 <h2 id="bibliography">Bibliography</h2>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p>Towards Aggregated Features: A Novel Proxy Detection Method Using NetFlow Data,&quot; 2020 IEEE 22nd International Conference on High Performance Computing and Communications_, pp. 409-416, 2020. <a href="https://ieeexplore.ieee.org/document/9408011" target="_blank" rel="noopener noreffer ">IEEE Xplore</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>&ldquo;Towards Aggregated Features: A Novel Proxy Detection Method Using NetFlow Data,&rdquo; 2020 IEEE 22nd International Conference on High Performance Computing and Communications, pp. 409-416, 2020. <a href="https://ieeexplore.ieee.org/document/9408011" target="_blank" rel="noopener noreffer ">IEEE Xplore</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -252,24 +254,25 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices" data-hashtags="network capture,android,tcpdump,wireshark,openwrt,mitmproxy,pcapdroid,https decryption"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://bilovus.com/posts/capture_network_mobile/" data-hashtag="network capture"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="https://bilovus.com/posts/capture_network_mobile/"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=https%3a%2f%2fbilovus.com%2fposts%2fcapture_network_mobile%2f&amp;text=Capture%20Network%20Traffic%20on%20Mobile%20Devices" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices" data-hashtags="network-capture,packet-analysis,tcpdump,wireshark,openwrt,mitmproxy,pcapdroid,https-decryption,port-mirroring,vpn,traffic-monitoring,IoT"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://bilovus.com/posts/capture_network_mobile/" data-hashtag="network-capture"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="https://bilovus.com/posts/capture_network_mobile/"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://bilovus.com/posts/capture_network_mobile/" data-title="Capture Network Traffic on Mobile Devices"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=https%3a%2f%2fbilovus.com%2fposts%2fcapture_network_mobile%2f&amp;text=Capture%20Network%20Traffic%20on%20Mobile%20Devices" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/network-capture/">Network Capture</a>,&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/tcpdump/">Tcpdump</a>,&nbsp;<a href="/tags/wireshark/">Wireshark</a>,&nbsp;<a href="/tags/openwrt/">Openwrt</a>,&nbsp;<a href="/tags/mitmproxy/">Mitmproxy</a>,&nbsp;<a href="/tags/pcapdroid/">Pcapdroid</a>,&nbsp;<a href="/tags/https-decryption/">Https Decryption</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/network-capture/">Network-Capture</a>,&nbsp;<a href="/tags/packet-analysis/">Packet-Analysis</a>,&nbsp;<a href="/tags/tcpdump/">Tcpdump</a>,&nbsp;<a href="/tags/wireshark/">Wireshark</a>,&nbsp;<a href="/tags/openwrt/">Openwrt</a>,&nbsp;<a href="/tags/mitmproxy/">Mitmproxy</a>,&nbsp;<a href="/tags/pcapdroid/">Pcapdroid</a>,&nbsp;<a href="/tags/https-decryption/">Https-Decryption</a>,&nbsp;<a href="/tags/port-mirroring/">Port-Mirroring</a>,&nbsp;<a href="/tags/vpn/">Vpn</a>,&nbsp;<a href="/tags/traffic-monitoring/">Traffic-Monitoring</a>,&nbsp;<a href="/tags/iot/">IoT</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"></div>
+    <div class="post-nav">
+            <a href="/posts/secure-offline-data-storage-wear-os/" class="next" rel="next" title="Secure Offline Data Storage on Wear OS Using Steganography">Secure Offline Data Storage on Wear OS Using Steganography<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://bilovus.com/about/" target="_blank">Oleg Bilovus</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://bilovus.com/about/" target="_blank">Oleg Bilovus</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
@@ -281,5 +284,5 @@
         <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.2/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/mhchem.min.js"></script><script>window.config={"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script src="/js/theme.min.769eafe095cf0d4abc4843d9fc4af7920da42c9970472c6d4547df4eb4530423.js" integrity="sha256-dp6v4JXPDUq8SEPZ/Er3kg2kLJlwRyxtRUffTrRTBCM="></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.2/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/mhchem.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script src="/js/theme.min.769eafe095cf0d4abc4843d9fc4af7920da42c9970472c6d4547df4eb4530423.js" integrity="sha256-dp6v4JXPDUq8SEPZ/Er3kg2kLJlwRyxtRUffTrRTBCM="></script></body>
 </html>

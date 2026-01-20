@@ -4,68 +4,84 @@
         <link>https://bilovus.com/tags/</link>
         <description>Tags - Tag - Oleg Bilovus&#39;s Tech Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>Android</title>
-    <link>https://bilovus.com/tags/android/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Adb</title>
+    <link>https://bilovus.com/tags/adb/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/android/</guid>
+    <guid>https://bilovus.com/tags/adb/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Https Decryption</title>
-    <link>https://bilovus.com/tags/https-decryption/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Emergency-Backup</title>
+    <link>https://bilovus.com/tags/emergency-backup/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/https-decryption/</guid>
+    <guid>https://bilovus.com/tags/emergency-backup/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Mitmproxy</title>
-    <link>https://bilovus.com/tags/mitmproxy/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Encryption</title>
+    <link>https://bilovus.com/tags/encryption/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/mitmproxy/</guid>
+    <guid>https://bilovus.com/tags/encryption/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Network Capture</title>
-    <link>https://bilovus.com/tags/network-capture/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Offline-Storage</title>
+    <link>https://bilovus.com/tags/offline-storage/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/network-capture/</guid>
+    <guid>https://bilovus.com/tags/offline-storage/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Openwrt</title>
-    <link>https://bilovus.com/tags/openwrt/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Openssl</title>
+    <link>https://bilovus.com/tags/openssl/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/openwrt/</guid>
+    <guid>https://bilovus.com/tags/openssl/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Pcapdroid</title>
-    <link>https://bilovus.com/tags/pcapdroid/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Privacy</title>
+    <link>https://bilovus.com/tags/privacy/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/pcapdroid/</guid>
+    <guid>https://bilovus.com/tags/privacy/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Tcpdump</title>
-    <link>https://bilovus.com/tags/tcpdump/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Steganography</title>
+    <link>https://bilovus.com/tags/steganography/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/tcpdump/</guid>
+    <guid>https://bilovus.com/tags/steganography/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Wireshark</title>
-    <link>https://bilovus.com/tags/wireshark/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
+    <title>Steghide</title>
+    <link>https://bilovus.com/tags/steghide/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
     <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/tags/wireshark/</guid>
+    <guid>https://bilovus.com/tags/steghide/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Termux</title>
+    <link>https://bilovus.com/tags/termux/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
+    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
+    <guid>https://bilovus.com/tags/termux/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Wear-Os</title>
+    <link>https://bilovus.com/tags/wear-os/</link>
+    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
+    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
+    <guid>https://bilovus.com/tags/wear-os/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
