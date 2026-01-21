@@ -629,15 +629,15 @@ fraction = true
 # whether to enable the fontawesome extended syntax
 fontawesome = true
 # whether to show link to Raw Markdown content of the content
-linkToMarkdown = true
+linkToMarkdown = false
 # FixIt 0.3.0 | NEW whether to show link to view source code of the post
 linkToSource = true
 # FixIt 0.3.0 | NEW whether to show link to edit the post
-linkToEdit = true
+linkToEdit = false
 # FixIt 0.3.0 | NEW whether to show link to report issue for the post
 linkToReport = true
 # FixIt 0.3.20 | NEW whether to show link to view the post in VSCode
-linkToVscode = true
+linkToVscode = false
 # whether to show the full text content in RSS
 rssFullText = false
 # FixIt 0.3.10 | CHANGED Page style ["narrow", "normal", "wide", ...]
