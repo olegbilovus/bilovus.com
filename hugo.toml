@@ -1,696 +1,928 @@
-baseURL = "https://bilovus.com/"
-
-# Change the default theme to be use when building the site with Hugo
-theme = "LoveIt"
+# -------------------------------------------------------------------------------------
+# Hugo Configuration
+# See: https://gohugo.io/configuration/all/
+# -------------------------------------------------------------------------------------
 
 # website title
 title = "Oleg Bilovus's Tech Blog"
-
+# Hostname (and path) to the root
+baseURL = "https://bilovus.com/"
+# theme list
+theme = "FixIt"
+# determines default content language ["en", "zh-cn", "fr", "pl", ...]
+defaultContentLanguage = "en"
 # language code ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "en"
 # language name ["English", "简体中文", "Français", "Polski", ...]
 languageName = "English"
+# whether to include Chinese/Japanese/Korean
+hasCJKLanguage = false
+# copyright description used only for seo schema
+copyright = ""
+
+# whether to use robots.txt
+enableRobotsTXT = true
+# whether to use git commit log
+enableGitInfo = true
+# whether to use emoji code
+enableEmoji = true
+
+# -------------------------------------------------------------------------------------
+# Front Matter Configuration
+# See: https://gohugo.io/configuration/front-matter/
+# -------------------------------------------------------------------------------------
+
+[frontmatter]
+_merge = "shallow"
+lastmod = [
+  "lastmod",
+  ":git",
+  ":fileModTime",
+  ":default",
+]
+
+# -------------------------------------------------------------------------------------
+# Imaging Configuration
+# See: https://gohugo.io/configuration/imaging/
+# -------------------------------------------------------------------------------------
+
+[imaging]
+_merge = "shallow"
+quality = 100
 
 
-# Menu config
+# -------------------------------------------------------------------------------------
+# Menu Configuration
+# See: https://fixit.lruihao.cn/documentation/basics/#menu-configuration
+# -------------------------------------------------------------------------------------
+
 [menu]
-  [[menu.main]]
-    weight = 1
-    identifier = "posts"
-    # you can add extra information before the name (HTML format is supported), such as icons
-    pre = ""
-    # you can add extra information after the name (HTML format is supported), such as icons
-    post = ""
-    name = "Posts"
-    url = "/posts/"
-    # title will be shown when you hover on this menu link
-    title = ""
-  [[menu.main]]
-    weight = 2
-    identifier = "tags"
-    pre = ""
-    post = ""
-    name = "Tags"
-    url = "/tags/"
-    title = ""
-  [[menu.main]]
-    weight = 3
-    identifier = "categories"
-    pre = ""
-    post = ""
-    name = "Categories"
-    url = "/categories/"
-    title = ""
-  [[menu.main]]
-    weight = 4
-    identifier = "about"
-    pre = ""
-    post = ""
-    name = "About Me"
-    url = "/about/"
-    title = ""
 
-# Markup related configuration in Hugo
+[[menu.main]]
+identifier = "posts"
+parent = ""
+# you can add extra information before the name (HTML format is supported), such as icons
+pre = ""
+# you can add extra information after the name (HTML format is supported), such as icons
+post = ""
+name = "Posts"
+url = "/posts/"
+# title will be shown when you hover on this menu link
+title = ""
+weight = 1
+
+[menu.main.params]
+icon = "fa-solid fa-file"
+
+[[menu.main]]
+identifier = "tags"
+parent = ""
+pre = ""
+post = ""
+name = "Tags"
+url = "/tags/"
+title = ""
+weight = 2
+
+# FixIt 0.2.14 | NEW add user-defined content to menu items
+[menu.main.params]
+# add css class to a specific menu item
+class = ""
+# whether set as a draft menu item whose function is similar to a draft post/page
+draft = false
+# FixIt 0.2.16 | NEW add fontawesome icon to a specific menu item
+icon = "fa-solid fa-tags"
+# FixIt 0.2.16 | NEW set menu item type, optional values: ["mobile", "desktop"]
+type = ""
+# FixIt 0.3.9 | NEW whether to show the submenu item divider line
+divided = false
+
+[[menu.main]]
+identifier = "categories"
+parent = ""
+pre = ""
+post = ""
+name = "Categories"
+url = "/categories/"
+title = ""
+weight = 3
+
+[menu.main.params]
+icon = "fa-solid fa-folder-tree"
+
+[[menu.main]]
+identifier = "about"
+parent = ""
+pre = ""
+post = ""
+name = "About Me"
+url = "/about/"
+title = ""
+weight = 4
+
+[menu.main.params]
+icon = "fa-solid fa-user-circle"
+
+# -------------------------------------------------------------------------------------
+# Markup Configuration
+# See: https://gohugo.io/configuration/markup/
+# -------------------------------------------------------------------------------------
+
 [markup]
-  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
-  [markup.highlight]
-    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
-    noClasses = false
+_merge = "shallow"
+
+# Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
+[markup.highlight]
+# ~~~~~~~~~~ necessary configurations ~~~~~~~~~~
+# https://github.com/hugo-fixit/FixIt/issues/43
+codeFences = true
+noClasses = false
+# ~~~~~~~~~~ necessary configurations ~~~~~~~~~~
+anchorLineNos = false
+guessSyntax = true
+lineNos = true
+lineNumbersInTable = true
+
+# Goldmark is from Hugo 0.60 the default library used for Markdown
+# See: https://gohugo.io/configuration/markup/#goldmark
+[markup.goldmark]
+duplicateResourceFiles = false
+
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+linkifyProtocol = 'https'
+strikethrough = false
+table = true
+taskList = true
+typographer = true
+
+# See: https://gohugo.io/configuration/markup/#extras
+[markup.goldmark.extensions.extras]
+
+[markup.goldmark.extensions.extras.delete]
+enable = true
+
+[markup.goldmark.extensions.extras.insert]
+enable = true
+
+[markup.goldmark.extensions.extras.mark]
+enable = true
+
+[markup.goldmark.extensions.extras.subscript]
+enable = true
+
+[markup.goldmark.extensions.extras.superscript]
+enable = true
+
+# https://gohugo.io/content-management/mathematics/
+[markup.goldmark.extensions.passthrough]
+enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [
+  ["\\[", "\\]"],
+  ["$$", "$$"]
+]
+inline = [
+  ["\\(", "\\)"],
+  ["$", "$"]
+]
+
+[markup.goldmark.parser]
+
+[markup.goldmark.parser.attribute]
+block = true
+title = true
+
+[markup.goldmark.renderer]
+hardWraps = false
+# whether to use HTML tags directly in the document
+unsafe = true
+xhtml = false
+
+# -------------------------------------------------------------------------------------
+# Modules Configuration
+# See: https://gohugo.io/configuration/module/
+# -------------------------------------------------------------------------------------
 
 [module]
-  [module.hugoVersion]
-    min = "0.128.0"
+
+[module.hugoVersion]
+extended = true
+min = "0.147.7"
+
+# -------------------------------------------------------------------------------------
+# Sitemap Configuration
+# See: https://gohugo.io/templates/sitemap/#configuration
+# -------------------------------------------------------------------------------------
+
+[sitemap]
+changefreq = "weekly"
+disable = false
+filename = "sitemap.xml"
+priority = 0.5
+
+# -------------------------------------------------------------------------------------
+# Permalinks Configuration
+# See: https://gohugo.io/content-management/urls/#permalinks
+# -------------------------------------------------------------------------------------
+
+[permalinks]
+
+[permalinks.page]
+# posts = "/p/:slugorcontentbasename"
+
+[permalinks.section]
+# posts = "/posts/:slugorcontentbasename"
+
+[permalinks.taxonomy]
+
+[permalinks.term]
+
+# -------------------------------------------------------------------------------------
+# Privacy Configuration
+# See: https://gohugo.io/configuration/privacy/
+# -------------------------------------------------------------------------------------
+
+[privacy]
+
+[privacy.x]
+enableDNT = true
+
+[privacy.youtube]
+privacyEnhanced = true
+
+# -------------------------------------------------------------------------------------
+# Output Format Configuration
+# See: https://gohugo.io/configuration/output-formats/
+# -------------------------------------------------------------------------------------
+
+[outputFormats]
+
+# FixIt 0.3.0 | NEW Options to make output /archives/index.html file
+[outputFormats.archives]
+path = "archives"
+baseName = "index"
+mediaType = "text/html"
+isPlainText = false
+isHTML = true
+permalinkable = true
+notAlternative = true
+
+# FixIt 0.3.0 | NEW Options to make output /offline/index.html file
+[outputFormats.offline]
+path = "offline"
+baseName = "index"
+mediaType = "text/html"
+isPlainText = false
+isHTML = true
+permalinkable = true
+notAlternative = true
+
+# FixIt 0.3.0 | NEW Options to make output readme.md file
+[outputFormats.readme]
+baseName = "readme"
+mediaType = "text/markdown"
+isPlainText = true
+isHTML = false
+notAlternative = true
+
+# FixIt 0.3.0 | CHANGED Options to make output baidu_urls.txt file
+[outputFormats.baidu_urls]
+baseName = "baidu_urls"
+mediaType = "text/plain"
+isPlainText = true
+isHTML = false
+notAlternative = true
+
+# FixIt 0.3.10 | NEW Options to make output search.json file
+[outputFormats.search]
+baseName = "search"
+mediaType = "application/json"
+rel = "search"
+isPlainText = true
+isHTML = false
+permalinkable = true
+
+# -------------------------------------------------------------------------------------
+# Output Configuration
+# See: https://gohugo.io/configuration/outputs/
+# -------------------------------------------------------------------------------------
+
+# Options to make hugo output files, the optional values are below:
+# home = ["html", "rss", "archives", "offline", "readme", "baidu_urls", "search"]
+# page = ["html", "markdown"]
+# section = ["html", "rss"]
+# taxonomy = ["html"]
+# term = ["html", "rss"]
+[outputs]
+_merge = "shallow"
+home = [
+  "html",
+  "rss",
+  "archives",
+  "offline",
+  "search"
+]
+page = [
+  "html",
+  "markdown"
+]
+section = [
+  "html",
+  "rss"
+]
+taxonomy = [ "html" ]
+term = [
+  "html",
+  "rss"
+]
+
+# -------------------------------------------------------------------------------------
+# Taxonomies Configuration
+# See: https://gohugo.io/configuration/taxonomies/
+# -------------------------------------------------------------------------------------
+
+[taxonomies]
+_merge = "shallow"
+category = "categories"
+tag = "tags"
+
+
+
+# -------------------------------------------------------------------------------------
+# Theme Core Configuration
+# See: https://fixit.lruihao.cn/documentation/basics/#theme-configuration
+# -------------------------------------------------------------------------------------
 
 [params]
-  # site default theme ["auto", "light", "dark"]
-  # 网站默认主题 ["auto", "light", "dark"]
-  defaultTheme = "auto"
-  # public git repo url only then enableGitInfo is true
-  # 公共 git 仓库路径，仅在 enableGitInfo 设为 true 时有效
-  gitRepo = ""
-  # which hash function used for SRI, when empty, no SRI is used
-  # ["sha256", "sha384", "sha512", "md5"]
-  # 哪种哈希函数用来 SRI, 为空时表示不使用 SRI
-  # ["sha256", "sha384", "sha512", "md5"]
-  fingerprint = "sha256"
-  # date format
-  # 日期格式
-  dateFormat = "2006-01-02"
-  # website title for Open Graph and Twitter Cards
-  # 网站标题, 用于 Open Graph 和 Twitter Cards
-  title = "Oleg Bilovus's Tech Blog"
-  # website description for RSS, SEO, Open Graph and Twitter Cards
-  # 网站描述, 用于 RSS, SEO, Open Graph 和 Twitter Cards
-  description = "A tech blog where I share my knowledge and experiences on programming, web development, and technology."
-  # website images for Open Graph and Twitter Cards
-  # 网站图片, 用于 Open Graph 和 Twitter Cards
-  images = []
+# FixIt 0.2.15 | CHANGED FixIt theme version
+version = "0.4.X" # e.g. "0.2.X", "0.2.15", "v0.2.15" etc.
+# site description
+description = "A tech blog where I share my knowledge and experiences on programming, web development, and technology."
+# site keywords
+keywords = ["blog", "technology", "programming", "web development"]
+# site default theme ["light", "dark", "auto"]
+defaultTheme = "auto"
+# which hash function used for SRI, when empty, no SRI is used
+# ["sha256", "sha384", "sha512", "md5"]
+fingerprint = "sha256"
+# date format
+dateFormat = "2006-01-02"
+# website images for Open Graph and Twitter Cards
+images = []
+# FixIt 0.2.12 | NEW enable PWA
+enablePWA = false
+# FixIt 0.2.14 | NEW whether to add external Icon for external links automatically
+externalIcon = false
+# FixIt 0.3.13 | NEW whether to capitalize titles
+capitalizeTitles = true
+# FixIt 0.3.0 | NEW whether to add site title to the title of every page
+# remember to set up your site title in `hugo.toml` (e.g. title = "title")
+withSiteTitle = true
+# FixIt 0.3.0 | NEW title delimiter when the site title is be added to the title of every page
+titleDelimiter = "-"
+# FixIt 0.3.0 | NEW whether to add site subtitle to the title of index page
+# remember to set up your site subtitle by `params.header.subtitle.name`
+indexWithSubtitle = false
+# FixIt 0.3.13 | NEW whether to show summary in plain text
+summaryPlainify = false
+# FixIt 0.4.0 | NEW whether to enable merging missing translations from other languages
+# when set to true, missing translations from other languages will be merged and displayed
+# default is false for better performance, especially for single-language sites
+# set to true if your site has multiple languages and you want to show all content
+enableTranslationMerge = false
+# FixIt 0.2.14 | NEW FixIt will, by default, inject a theme meta tag in the HTML head on the home page only.
+# You can turn it off, but we would really appreciate if you don''t, as this is a good way to watch FixIt''s popularity on the rise.
+disableThemeInject = false
 
-  # Author config
-  # 作者配置
-  [params.author]
-    name = "Oleg Bilovus"
-    email = "contact[at]bilovus.com"
-    link = "https://bilovus.com/about/"
+# Author Configuration
+[params.author]
+name = "Oleg Bilovus"
+email = "contact@bilovus.com"
+link = "https://bilovus.com/about/"
+avatar = "https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials"
 
-  # Header config
-  # 页面头部导航栏配置
-  [params.header]
-    # desktop header mode ["fixed", "normal", "auto"]
-    # 桌面端导航栏模式 ["fixed", "normal", "auto"]
-    desktopMode = "fixed"
-    # mobile header mode ["fixed", "normal", "auto"]
-    # 移动端导航栏模式 ["fixed", "normal", "auto"]
-    mobileMode = "auto"
-    # Header title config
-    # 页面头部导航栏标题配置
-    [params.header.title]
-      # URL of the LOGO
-      # LOGO 的 URL
-      logo = "https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials"
-      # title name
-      # 标题名称
-      name = "Oleg Bilovus's Tech Blog"
-      # you can add extra information before the name (HTML format is supported), such as icons
-      # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
-      pre = ""
-      # you can add extra information after the name (HTML format is supported), such as icons
-      # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
-      post = ""
-      # whether to use typeit animation for title name
-      # 是否为标题显示打字机动画
-      typeit = false
+# FixIt 0.3.0 | NEW public Git repository information only then enableGitInfo is true
+[params.gitInfo]
+# e.g. "https://github.com/hugo-fixit/docs"
+repo = "https://github.com/olegbilovus/bilovus.com"
+branch = "main"
+# the content directory path relative to the root of the repository
+dir = "content"
+# the issue template for reporting issue of the posts
+# available template params: {title} {URL} {sourceURL}
+issueTpl = "title=[BUG]%20{title}&body=|Field|Value|%0A|-|-|%0A|Title|{title}|%0A|URL|{URL}|%0A|Filename|{sourceURL}|"
 
-  # Footer config
-  # 页面底部信息配置
-  [params.footer]
-    enable = true
-    # Custom content (HTML format is supported)
-    # 自定义内容 (支持 HTML 格式)
-    custom = ""
-    # whether to show Hugo and theme info
-    # 是否显示 Hugo 和主题信息
-    hugo = true
-    # whether to show copyright info
-    # 是否显示版权信息
-    copyright = true
-    # whether to show the author
-    # 是否显示作者
-    author = true
-    # site creation time
-    # 网站创立年份
-    since = 2025
-    # ICP info only in China (HTML format is supported)
-    # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
-    icp = ""
-    # license info (HTML format is supported)
-    # 许可协议信息 (支持 HTML 格式)
-    license= "<a href=\"https://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY-NC 4.0</a>"
+# App icon config
+[params.app]
+# optional site title override for the app when added to an iOS home screen or Android launcher
+title = "Oleg Bilovus''s Tech Blog"
+# whether to omit favicon resource links
+noFavicon = false
+# modern SVG favicon to use in place of older style .png and .ico files
+svgFavicon = ""
+# Safari mask icon color
+iconColor = "#5bbad5"
+# Windows v8-10 tile color
+tileColor = "#da532c"
 
-  # Section (all posts) page config
-  # Section (所有文章) 页面配置
-  [params.section]
-    # special amount of posts in each section page
-    # section 页面每页显示文章数量
-    paginate = 20
-    # date format (month and day)
-    # 日期格式 (月和日)
-    dateFormat = "01-02"
-    # amount of RSS pages
-    # RSS 文章数目
-    rss = 10
+# FixIt 0.2.12 | CHANGED Android browser theme color
+[params.app.themeColor]
+light = "#ffffff"
+dark = "#252627"
 
-  # List (category or tag) page config
-  # List (目录或标签) 页面配置
-  [params.list]
-    # special amount of posts in each list page
-    # list 页面每页显示文章数量
-    paginate = 20
-    # date format (month and day)
-    # 日期格式 (月和日)
-    dateFormat = "01-02"
-    # amount of RSS pages
-    # RSS 文章数目
-    rss = 10
+# Search config
+[params.search]
+enable = true
+# type of search engine ["algolia", "fuse", "cse", "post-chat"]
+type = "cse"
+# max index length of the chunked content
+contentLength = 4000
+# placeholder of the search bar
+placeholder = "Search..."
+# max number of results length
+maxResultLength = 10
+# snippet length of the result
+snippetLength = 50
+# HTML tag name of the highlight part in results
+highlightTag = "em"
+# whether to use the absolute URL based on the baseURL in search index
+absoluteURL = false
+# FixIt 0.4.0 | NEW whether to enable anchorify for headings in search results
+anchorify = true
 
-  # App icon config
-  # 应用图标配置
-  [params.app]
-    # optional site title override for the app when added to an iOS home screen or Android launcher
-    # 当添加到 iOS 主屏幕或者 Android 启动器时的标题, 覆盖默认标题
-    title = "Oleg Bilovus's Tech Blog"
-    # whether to omit favicon resource links
-    # 是否隐藏网站图标资源链接
-    noFavicon = false
-    # modern SVG favicon to use in place of older style .png and .ico files
-    # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
-    svgFavicon = ""
-    # Android browser theme color
-    # Android 浏览器主题色
-    themeColor = "#ffffff"
-    # Safari mask icon color
-    # Safari 图标颜色
-    iconColor = "#5bbad5"
-    # Windows v8-11 tile color
-    # Windows v8-11 磁贴颜色
-    tileColor = "#da532c"
+[params.search.algolia]
+index = ""
+appID = ""
+searchKey = ""
 
-  # Search config
-  # 搜索配置
-  [params.search]
-    enable = false
-    # type of search engine ["lunr", "algolia"]
-    # 搜索引擎的类型 ["lunr", "algolia"]
-    type = "lunr"
-    # max index length of the chunked content
-    # 文章内容最长索引长度
-    contentLength = 4000
-    # placeholder of the search bar
-    # 搜索框的占位提示语
-    placeholder = ""
-    # max number of results length
-    # 最大结果数目
-    maxResultLength = 10
-    # snippet length of the result
-    # 结果内容片段长度
-    snippetLength = 30
-    # HTML tag name of the highlight part in results
-    # 搜索结果中高亮部分的 HTML 标签
-    highlightTag = "em"
-    # whether to use the absolute URL based on the baseURL in search index
-    # 是否在搜索索引中使用基于 baseURL 的绝对路径
-    absoluteURL = false
-    [params.search.algolia]
-      index = ""
-      appID = ""
-      searchKey = ""
+# FixIt 0.2.17 | NEW https://fusejs.io/api/options.html
+[params.search.fuse]
+isCaseSensitive = false
+minMatchCharLength = 2
+findAllMatches = false
+location = 0
+threshold = 0.3
+distance = 100
+ignoreLocation = false
+useExtendedSearch = false
+ignoreFieldNorm = false
 
-  # Home page config
-  # 主页信息设置
-  [params.home]
-    # amount of RSS pages
-    # RSS 文章数目
-    rss = 10
-    # Home page profile
-    # 主页个人信息
-    [params.home.profile]
-      enable = true
-      # Gravatar Email for preferred avatar in home page
-      # Gravatar 邮箱，用于优先在主页显示的头像
-      gravatarEmail = "contact@bilovus.com"
-      # URL of avatar shown in home page
-      # 主页显示头像的 URL
-      avatarURL = ""
-      # title shown in home page (HTML format is supported)
-      # 主页显示的网站标题 (支持 HTML 格式)
-      title = ""
-      # subtitle shown in home page (HTML format is supported)
-      # 主页显示的网站副标题 (允许 HTML 格式)
-      subtitle = ""
-      # whether to use typeit animation for subtitle
-      # 是否为副标题显示打字机动画
-      typeit = true
-      # whether to show social links
-      # 是否显示社交账号
-      social = true
-      # disclaimer (HTML format is supported)
-      # 免责声明 (支持 HTML 格式)
-      disclaimer = ""
-    # Home page posts
-    # 主页文章列表
-    [params.home.posts]
-      enable = true
-      # special amount of posts in each home posts page
-      # 主页每页显示文章数量
-      paginate = 6
-  # Social config in home page
-  # 主页的社交信息设置
-  [params.social]
-    GitHub = "olegbilovus"
-    Linkedin = "olegbilovus"
-    X = ""
-    Instagram = ""
-    Facebook = ""
-    Telegram = ""
-    Medium = ""
-    Gitlab = ""
-    Youtubelegacy = ""
-    Youtubecustom = ""
-    Youtubechannel = ""
-    Tumblr = ""
-    Quora = ""
-    Keybase = ""
-    Pinterest = ""
-    Reddit = ""
-    Codepen = ""
-    FreeCodeCamp = ""
-    Bitbucket = ""
-    Stackoverflow = ""
-    Weibo = ""
-    Odnoklassniki = ""
-    VK = ""
-    Flickr = ""
-    Xing = ""
-    Snapchat = ""
-    Soundcloud = ""
-    Spotify = ""
-    Bandcamp = ""
-    Paypal = ""
-    Fivehundredpx = ""
-    Mix = ""
-    Goodreads = ""
-    Lastfm = ""
-    Foursquare = ""
-    Hackernews = ""
-    Kickstarter = ""
-    Patreon = ""
-    Steam = ""
-    Twitch = ""
-    Strava = ""
-    Skype = ""
-    Whatsapp = ""
-    Zhihu = ""
-    Douban = ""
-    Angellist = ""
-    Slidershare = ""
-    Jsfiddle = ""
-    Deviantart = ""
-    Behance = ""
-    Dribbble = ""
-    Wordpress = ""
-    Vine = ""
-    Googlescholar = ""
-    Researchgate = ""
-    Mastodon = ""
-    Thingiverse = ""
-    Devto = ""
-    Gitea = ""
-    XMPP = ""
-    Matrix = ""
-    Bilibili = ""
-    Discord = ""
-    DiscordInvite = ""
-    Lichess = ""
-    ORCID = "0000-0001-6285-5344"
-    Pleroma = ""
-    Kaggle = ""
-    MediaWiki = ""
-    Plume = ""
-    HackTheBox = ""
-    RootMe = ""
-    Malt = ""
-    TikTok = ""
-    TryHackMe = ""
-    Codeberg = ""
-    HuggingFace = ""
-    Threads = ""
-    Email = ""
-    Phone = ""
-    RSS = ""
+# FixIt 0.3.16 | NEW Custom Search Engine (CSE)
+[params.cse]
+# Search Engine: ["google", "bing"]
+engine = "google"
+# Search results page URL (layout: search)
+resultsPage = "/search/"
 
-  # Page global config
-  # 文章页面全局配置
-  [params.page]
-    # whether to hide a page from home page
-    # 是否在主页隐藏一篇文章
-    hiddenFromHomePage = false
-    # whether to hide a page from search results
-    # 是否在搜索结果中隐藏一篇文章
-    hiddenFromSearch = false
-    # whether to enable twemoji
-    # 是否使用 twemoji
-    twemoji = false
-    # whether to enable lightgallery
-    # 是否使用 lightgallery
-    lightgallery = true
-    # whether to enable the ruby extended syntax
-    # 是否使用 ruby 扩展语法
-    ruby = true
-    # whether to enable the fraction extended syntax
-    # 是否使用 fraction 扩展语法
-    fraction = true
-    # whether to enable the fontawesome extended syntax
-    # 是否使用 fontawesome 扩展语法
-    fontawesome = true
-    # whether to show link to Raw Markdown content of the content
-    # 是否显示原始 Markdown 文档内容的链接
-    linkToMarkdown = true
-    # whether to show the full text content in RSS
-    # 是否在 RSS 中显示全文内容
-    rssFullText = false
-    # Table of the contents config
-    # 目录配置
-    [params.page.toc]
-      # whether to enable the table of the contents
-      # 是否使用目录
-      enable = true
-      # whether to keep the static table of the contents in front of the post
-      # 是否保持使用文章前面的静态目录
-      keepStatic = false
-      # whether to make the table of the contents in the sidebar automatically collapsed
-      # 是否使侧边目录自动折叠展开
-      auto = true
-    # Code config
-    # 代码配置
-    [params.page.code]
-      # whether to show the copy button of the code block
-      # 是否显示代码块的复制按钮
-      copy = true
-      # the maximum number of lines of displayed code by default
-      # 默认展开显示的代码行数
-      maxShownLines = 50
-    [params.page.code.render]
-      goat = true
-      mermaid = true
-    # KaTeX mathematical formulas config (KaTeX https://katex.org/)
-    # KaTeX 数学公式配置 (KaTeX https://katex.org/)
-    [params.page.math]
-      enable = true
-      # default inline delimiter is $ ... $ and \( ... \)
-      # 默认行内定界符是 $ ... $ 和 \( ... \)
-      inlineLeftDelimiter = ""
-      inlineRightDelimiter = ""
-      # default block delimiter is $$ ... $$, \[ ... \], \begin{equation} ... \end{equation} and some other functions
-      # 默认块定界符是 $$ ... $$, \[ ... \],  \begin{equation} ... \end{equation} 和一些其它的函数
-      blockLeftDelimiter = ""
-      blockRightDelimiter = ""
-      # KaTeX extension copy_tex
-      # KaTeX 插件 copy_tex
-      copyTex = true
-      # KaTeX extension mhchem
-      # KaTeX 插件 mhchem
-      mhchem = true
-    # Mapbox GL JS config (Mapbox GL JS https://docs.mapbox.com/mapbox-gl-js)
-    # Mapbox GL JS 配置 (Mapbox GL JS https://docs.mapbox.com/mapbox-gl-js)
-    [params.page.mapbox]
-      # access token of Mapbox GL JS
-      # Mapbox GL JS 的 access token
-      accessToken = ""
-      # style for the light theme
-      # 浅色主题的地图样式
-      lightStyle = "mapbox://styles/mapbox/light-v10?optimize=true"
-      # style for the dark theme
-      # 深色主题的地图样式
-      darkStyle = "mapbox://styles/mapbox/dark-v10?optimize=true"
-      # whether to add NavigationControl (https://docs.mapbox.com/mapbox-gl-js/api/#navigationcontrol)
-      # 是否添加 NavigationControl (https://docs.mapbox.com/mapbox-gl-js/api/#navigationcontrol)
-      navigation = true
-      # whether to add GeolocateControl (https://docs.mapbox.com/mapbox-gl-js/api/#geolocatecontrol)
-      # 是否添加 GeolocateControl (https://docs.mapbox.com/mapbox-gl-js/api/#geolocatecontrol)
-      geolocate = true
-      # whether to add ScaleControl (https://docs.mapbox.com/mapbox-gl-js/api/#scalecontrol)
-      # 是否添加 ScaleControl (https://docs.mapbox.com/mapbox-gl-js/api/#scalecontrol)
-      scale = true
-      # whether to add FullscreenControl (https://docs.mapbox.com/mapbox-gl-js/api/#fullscreencontrol)
-      # 是否添加 FullscreenControl (https://docs.mapbox.com/mapbox-gl-js/api/#fullscreencontrol)
-      fullscreen = true
-    # Social share links in post page
-    # 文章页面的分享信息设置
-    [params.page.share]
-      enable = true
-      X = true
-      Threads = true
-      Facebook = true
-      Linkedin = true
-      Whatsapp = false
-      Pinterest = false
-      Tumblr = false
-      HackerNews = true
-      Reddit = false
-      VK = false
-      Buffer = false
-      Xing = false
-      Line = false
-      Instapaper = false
-      Pocket = false
-      Flipboard = false
-      Weibo = false
-      Blogger = false
-      Baidu = false
-      Odnoklassniki = false
-      Evernote = false
-      Skype = false
-      Trello = false
-      Diaspora = false
-      Mix = false
-      Telegram = true
-    # Comment config
-    # 评论系统设置
-    [params.page.comment]
-      enable = false
-      # Disqus comment config (https://disqus.com/)
-      # Disqus 评论系统设置 (https://disqus.com/)
-      [params.page.comment.disqus]
-        enable = false
-        # Disqus shortname to use Disqus in posts
-        # Disqus 的 shortname，用来在文章中启用 Disqus 评论系统
-        shortname = ""
-      # Gitalk comment config (https://github.com/gitalk/gitalk)
-      # Gitalk 评论系统设置 (https://github.com/gitalk/gitalk)
-      [params.page.comment.gitalk]
-        enable = false
-        owner = ""
-        repo = ""
-        clientId = ""
-        clientSecret = ""
-      # Valine comment config (https://github.com/xCss/Valine)
-      # Valine 评论系统设置 (https://github.com/xCss/Valine)
-      [params.page.comment.valine]
-        enable = false
-        appId = ""
-        appKey = ""
-        placeholder = ""
-        avatar = "mp"
-        meta= ""
-        pageSize = 10
-        # automatically adapt the current theme i18n configuration when empty
-        # 为空时自动适配当前主题 i18n 配置
-        lang = ""
-        visitor = true
-        recordIP = true
-        highlight = true
-        enableQQ = false
-        serverURLs = ""
-        # emoji data file name, default is "google.yml"
-        # ["apple.yml", "google.yml", "facebook.yml", "twitter.yml"]
-        # located in "themes/LoveIt/assets/lib/valine/emoji/" directory
-        # you can store your own data files in the same path under your project:
-        # "assets/lib/valine/emoji/"
-        # emoji 数据文件名称, 默认是 "google.yml"
-        # ["apple.yml", "google.yml", "facebook.yml", "twitter.yml"]
-        # 位于 "themes/LoveIt/assets/lib/valine/emoji/" 目录
-        # 可以在你的项目下相同路径存放你自己的数据文件:
-        # "assets/lib/valine/emoji/"
-        emoji = ""
-      # Facebook comment config (https://developers.facebook.com/docs/plugins/comments)
-      # Facebook 评论系统设置 (https://developers.facebook.com/docs/plugins/comments)
-      [params.page.comment.facebook]
-        enable = false
-        width = "100%"
-        numPosts = 10
-        appId = ""
-        # automatically adapt the current theme i18n configuration when empty
-        # 为空时自动适配当前主题 i18n 配置
-        languageCode = ""
-      # Telegram comments config (https://comments.app/)
-      # Telegram comments 评论系统设置 (https://comments.app/)
-      [params.page.comment.telegram]
-        enable = false
-        siteID = ""
-        limit = 5
-        height = ""
-        color = ""
-        colorful = true
-        dislikes = false
-        outlined = false
-      # Commento comment config (https://commento.io/)
-      # Commento comment 评论系统设置 (https://commento.io/)
-      [params.page.comment.commento]
-        enable = false
-      # utterances comment config (https://utteranc.es/)
-      # utterances comment 评论系统设置 (https://utteranc.es/)
-      [params.page.comment.utterances]
-        enable = false
-        # owner/repo
-        repo = ""
-        issueTerm = "pathname"
-        label = ""
-        lightTheme = "github-light"
-        darkTheme = "github-dark"
-      # giscus comment config (https://giscus.app/)
-      # giscus comment 评论系统设置 (https://giscus.app/zh-CN)
-      [params.page.comment.giscus]
-        # You can refer to the official documentation of giscus to use the following configuration.
-        # 你可以参考官方文档来使用下列配置
-        enable = false
-        repo = ""
-        repoId = ""
-        category = "Announcements"
-        categoryId = ""
-        # automatically adapt the current theme i18n configuration when empty
-        # 为空时自动适配当前主题 i18n 配置
-        lang = ""
-        mapping = "pathname"
-        reactionsEnabled = "1"
-        emitMetadata = "0"
-        inputPosition = "bottom"
-        lazyLoading = false
-        lightTheme = "light"
-        darkTheme = "dark"
-    # Third-party library config
-    # 第三方库配置
-    [params.page.library]
-      [params.page.library.css]
-        # someCSS = "some.css"
-        # located in "assets/" 位于 "assets/"
-        # Or 或者
-        # someCSS = "https://cdn.example.com/some.css"
-      [params.page.library.js]
-        # someJavascript = "some.js"
-        # located in "assets/" 位于 "assets/"
-        # Or 或者
-        # someJavascript = "https://cdn.example.com/some.js"
-    # Page SEO config
-    # 页面 SEO 配置
-    [params.page.seo]
-      # image URL
-      # 图片 URL
-      images = []
-      # Publisher info
-      # 出版者信息
-      [params.page.seo.publisher]
-        name = ""
-        logoUrl = ""
+[params.cse.google]
+cx = "479a2da030316461a"
 
-  # TypeIt config
-  # TypeIt 配置
-  [params.typeit]
-    # typing speed between each step (measured in milliseconds)
-    # 每一步的打字速度 (单位是毫秒)
-    speed = 100
-    # blinking speed of the cursor (measured in milliseconds)
-    # 光标的闪烁速度 (单位是毫秒)
-    cursorSpeed = 1000
-    # character used for the cursor (HTML format is supported)
-    # 光标的字符 (支持 HTML 格式)
-    cursorChar = "|"
-    # cursor duration after typing finishing (measured in milliseconds, "-1" means unlimited)
-    # 打字结束之后光标的持续时间 (单位是毫秒, "-1" 代表无限大)
-    duration = -1
+# Header config
+[params.header]
+# FixIt 0.2.13 | CHANGED desktop header mode ["sticky", "normal", "auto"]
+desktopMode = "sticky"
+# FixIt 0.2.13 | CHANGED mobile header mode ["sticky", "normal", "auto"]
+mobileMode = "auto"
 
-  # Site verification code for Google/Bing/Yandex/Pinterest/Baidu
-  # 网站验证代码，用于 Google/Bing/Yandex/Pinterest/Baidu
-  [params.verification]
-    google = ""
-    bing = ""
-    yandex = ""
-    pinterest = ""
-    baidu = ""
+# Header title config
+[params.header.title]
+# URL of the LOGO
+logo = "https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials"
+# title name
+name = "Oleg Bilovus's Tech Blog"
+# you can add extra information before the name (HTML format is supported), such as icons
+pre = ""
+# you can add extra information after the name (HTML format is supported), such as icons
+post = ""
+# whether to use typeit animation for title name
+typeit = false
 
-  # Site SEO config
-  # 网站 SEO 配置
-  [params.seo]
-    # image URL
-    # 图片 URL
-    image = ""
-    # thumbnail URL
-    # 缩略图 URL
-    thumbnailUrl = ""
+# FixIt 0.2.12 | NEW Header subtitle config
+[params.header.subtitle]
+# subtitle name
+name = ""
+# whether to use typeit animation for subtitle name
+typeit = false
 
-  # Analytics config
-  # 网站分析配置
-  [params.analytics]
-    # Google Analytics
-    [params.analytics.google]
-      id = ""
-      # whether to respect the browser’s “do not track” setting
-      # 是否遵循浏览器的 “Do Not Track” 设置
-      respectDoNotTrack = false
-    # Fathom Analytics
-    [params.analytics.fathom]
-      id = ""
-      # server url for your tracker if you're self hosting
-      # 自行托管追踪器时的主机路径
-      server = ""
-    # Plausible Analytics
-    [params.analytics.plausible]
-      dataDomain = ""
-    # Yandex Metrica
-    [params.analytics.yandexMetrica]
-      id = ""
+# FixIt 0.2.18 | NEW Breadcrumb config
+[params.breadcrumb]
+enable = false
+sticky = false
+showHome = false
+# FixIt 0.3.13 | NEW
+separator = "/"
+capitalize = true
 
-  # Cookie consent config
-  # Cookie 许可配置
-  [params.cookieconsent]
-    enable = false
-    # text strings used for Cookie consent banner
-    # 用于 Cookie 许可横幅的文本字符串
-    [params.cookieconsent.content]
-      message = ""
-      dismiss = ""
-      link = ""
+# FixIt 0.3.10 | NEW Post navigation config
+[params.navigation]
+# whether to show the post navigation in section pages scope
+inSection = false
+# whether to reverse the next/previous post navigation order
+reverse = false
 
-  # CDN config for third-party library files
-  # 第三方库文件的 CDN 设置
-  [params.cdn]
-    # CDN data file name, disabled by default
-    # ["jsdelivr.yml"]
-    # located in "themes/LoveIt/assets/data/cdn/" directory
-    # you can store your own data files in the same path under your project:
-    # "assets/data/cdn/"
-    # CDN 数据文件名称, 默认不启用
-    # ["jsdelivr.yml"]
-    # 位于 "themes/LoveIt/assets/data/cdn/" 目录
-    # 可以在你的项目下相同路径存放你自己的数据文件:
-    # "assets/data/cdn/"
-    data = "jsdelivr.yml"
+# Footer config
+[params.footer]
+enable = true
+# whether to show copyright info
+copyright = true
+# whether to show the author
+author = true
+# Site creation year
+since = 2025
+# FixIt 0.2.12 | NEW Public network security only in China (HTML format is supported)
+gov = ""
+# ICP info only in China (HTML format is supported)
+icp = ""
+# license info (HTML format is supported)
+license = "<a href=\"https://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY-NC 4.0</a>"
 
-  # Compatibility config
-  # 兼容性设置
-  [params.compatibility]
-    # whether to use Polyfill.io to be compatible with older browsers
-    # 是否使用 Polyfill.io 来兼容旧式浏览器
-    polyfill = false
-    # whether to use object-fit-images to be compatible with older browsers
-    # 是否使用 object-fit-images 来兼容旧式浏览器
-    objectFit = false
+# FixIt 0.3.0 | NEW whether to show Hugo and theme info
+[params.footer.powered]
+enable = true
+hugoLogo = true
+themeLogo = true
+
+[params.footer.siteTime]
+enable = false
+animate = true
+icon = "fa-solid fa-heartbeat"
+pre = ""
+value = ""
+
+# Section page config (all pages in section)
+[params.section]
+# special amount of pages in each section page
+paginate = 20
+# date format (month and day)
+dateFormat = "01-02"
+
+# Term list (category or tag) page config
+[params.list]
+# special amount of posts in each list page
+paginate = 20
+# date format (month and day)
+dateFormat = "01-02"
+
+# Home page config
+[params.home]
+
+# Home page profile
+[params.home.profile]
+enable = true
+# Gravatar Email for preferred avatar in home page
+gravatarEmail = "contact@bilovus.com"
+# URL of avatar shown in home page, default is author''s avatar
+avatarURL = ""
+# title shown in home page (HTML format is supported)
+title = ""
+# subtitle shown in home page (HTML format is supported)
+subtitle = ""
+# whether to use typeit animation for subtitle
+typeit = true
+# whether to show social links
+social = true
+# disclaimer (HTML format is supported)
+disclaimer = ""
+
+# Home page posts
+[params.home.posts]
+enable = true
+# special amount of posts in each home posts page
+paginate = 6
+
+# FixIt 0.2.16 | CHANGED Social config about the author
+[params.social]
+GitHub = "olegbilovus"
+Linkedin = "olegbilovus"
+ORCID = "0000-0001-6285-5344"
+X = ""
+Instagram = ""
+Facebook = ""
+Telegram = ""
+Medium = ""
+Gitlab = ""
+Reddit = ""
+Stackoverflow = ""
+Mastodon = ""
+Discord = ""
+Email = ""
+RSS = ""
+
+# Page global config
+[params.page]
+# whether to hide a page from home page
+hiddenFromHomePage = false
+# whether to hide a page from search results
+hiddenFromSearch = false
+# whether to enable twemoji
+twemoji = false
+# whether to enable lightgallery
+lightgallery = true
+# whether to enable the ruby extended syntax
+ruby = true
+# whether to enable the fraction extended syntax
+fraction = true
+# whether to enable the fontawesome extended syntax
+fontawesome = true
+# whether to show link to Raw Markdown content of the content
+linkToMarkdown = true
+# FixIt 0.3.0 | NEW whether to show link to view source code of the post
+linkToSource = true
+# FixIt 0.3.0 | NEW whether to show link to edit the post
+linkToEdit = true
+# FixIt 0.3.0 | NEW whether to show link to report issue for the post
+linkToReport = true
+# FixIt 0.3.20 | NEW whether to show link to view the post in VSCode
+linkToVscode = true
+# whether to show the full text content in RSS
+rssFullText = false
+# FixIt 0.3.10 | CHANGED Page style ["narrow", "normal", "wide", ...]
+pageStyle = "normal"
+# FixIt 0.4.0 | NEW whether to show the last modified time
+showLastmod = true
+# FixIt 0.2.17 | NEW whether to enable wordCount
+wordCount = true
+# FixIt 0.2.17 | NEW whether to enable readingTime
+readingTime = true
+
+# Table of the contents config
+[params.page.toc]
+# whether to enable the table of the contents
+enable = true
+# whether to keep the static table of the contents in front of the post
+keepStatic = false
+# whether to make the table of the contents in the sidebar automatically collapsed
+auto = true
+# FixIt 0.2.13 | NEW position of TOC ["left", "right"]
+position = "right"
+# FixIt 0.3.12 | NEW supersede `markup.tableOfContents` settings
+ordered = false
+startLevel = 2
+endLevel = 6
+# FixIt 0.4.0 | NEW whether to decrease the H1 heading level in content
+decreaseH1 = false
+
+# Code config
+[params.page.code]
+# whether to show the copy button of the code block
+copy = true
+# the maximum number of lines of displayed code by default
+maxShownLines = 50
+
+[params.page.code.render]
+goat = true
+mermaid = true
+
+# KaTeX mathematical formulas config (KaTeX https://katex.org/)
+[params.page.math]
+enable = true
+# default inline delimiter is $ ... $ and \( ... \)
+inlineLeftDelimiter = ""
+inlineRightDelimiter = ""
+# default block delimiter is $$ ... $$, \[ ... \], \begin{equation} ... \end{equation} and some other functions
+blockLeftDelimiter = ""
+blockRightDelimiter = ""
+# KaTeX extension copy_tex
+copyTex = true
+# KaTeX extension mhchem
+mhchem = true
+
+# Mapbox GL JS config (https://docs.mapbox.com/mapbox-gl-js)
+[params.page.mapbox]
+# access token of Mapbox GL JS
+accessToken = ""
+# style for the light theme
+lightStyle = "mapbox://styles/mapbox/light-v11"
+# style for the dark theme
+darkStyle = "mapbox://styles/mapbox/dark-v11"
+# whether to add NavigationControl
+navigation = true
+# whether to add GeolocateControl
+geolocate = true
+# whether to add ScaleControl
+scale = true
+# whether to add FullscreenControl
+fullscreen = true
+
+# Social share links in post page
+[params.page.share]
+enable = true
+X = true
+Threads = true
+Facebook = true
+Linkedin = true
+Whatsapp = false
+Pinterest = false
+Tumblr = false
+HackerNews = true
+Reddit = false
+Telegram = true
+VK = false
+Buffer = false
+Xing = false
+Line = false
+Instapaper = false
+Pocket = false
+Flipboard = false
+Weibo = false
+Blogger = false
+Baidu = false
+Odnoklassniki = false
+Evernote = false
+Skype = false
+Trello = false
+Diaspora = false
+Mix = false
+
+# Comment config
+[params.page.comment]
+enable = false
+
+# Disqus comment config (https://disqus.com/)
+[params.page.comment.disqus]
+enable = false
+# Disqus shortname to use Disqus in posts
+shortname = ""
+
+# Gitalk comment config (https://github.com/gitalk/gitalk)
+[params.page.comment.gitalk]
+enable = false
+owner = ""
+repo = ""
+clientId = ""
+clientSecret = ""
+
+# utterances comment config (https://utteranc.es/)
+[params.page.comment.utterances]
+enable = false
+# owner/repo
+repo = ""
+issueTerm = "pathname"
+label = ""
+lightTheme = "github-light"
+darkTheme = "github-dark"
+
+# giscus comment config (https://giscus.app/)
+[params.page.comment.giscus]
+# You can refer to the official documentation of giscus to use the following configuration.
+enable = false
+repo = ""
+repoId = ""
+category = "Announcements"
+categoryId = ""
+# automatically adapt the current theme i18n configuration when empty
+lang = ""
+mapping = "pathname"
+reactionsEnabled = "1"
+emitMetadata = "0"
+inputPosition = "bottom"
+lazyLoading = false
+lightTheme = "light"
+darkTheme = "dark"
+
+# Third-party library config
+[params.page.library]
+
+[params.page.library.css]
+# someCSS = "some.css"
+# located in "assets/"
+# Or
+# someCSS = "https://cdn.example.com/some.css"
+
+[params.page.library.js]
+# someJavascript = "some.js"
+# located in "assets/"
+# Or
+# someJavascript = "https://cdn.example.com/some.js"
+
+# Page SEO config
+[params.page.seo]
+# image URL
+images = []
+
+# Publisher info
+[params.page.seo.publisher]
+name = ""
+logoUrl = ""
+
+# TypeIt config
+[params.typeit]
+# typing speed between each step (measured in milliseconds)
+speed = 100
+# blinking speed of the cursor (measured in milliseconds)
+cursorSpeed = 1000
+# character used for the cursor (HTML format is supported)
+cursorChar = "|"
+# cursor duration after typing finishing (measured in milliseconds, "-1" means unlimited)
+duration = -1
+
+# Site verification code for Google/Bing/Yandex/Pinterest/Baidu
+[params.verification]
+google = ""
+bing = ""
+yandex = ""
+pinterest = ""
+baidu = ""
+
+# Site SEO config
+[params.seo]
+# image URL
+image = ""
+# thumbnail URL
+thumbnailUrl = ""
+
+# Analytics config
+[params.analytics]
+
+# Google Analytics
+[params.analytics.google]
+id = ""
+# whether to respect the browser''s "do not track" setting
+respectDoNotTrack = false
+
+# Fathom Analytics
+[params.analytics.fathom]
+id = ""
+# server url for your tracker if you''re self hosting
+server = ""
+
+# Plausible Analytics
+[params.analytics.plausible]
+dataDomain = ""
+
+# Cookie consent config
+[params.cookieconsent]
+enable = false
+# text strings used for Cookie consent banner
+[params.cookieconsent.content]
+message = ""
+dismiss = ""
+link = ""
+
+# CDN config for third-party library files
+[params.cdn]
+# CDN data file name, disabled by default
+# ["jsdelivr.yml"]
+# located in "themes/FixIt/assets/data/cdn/" directory
+# you can store your own data files in the same path under your project:
+# "assets/data/cdn/"
+data = ""
+
+# Compatibility config
+[params.compatibility]
+# whether to use Polyfill.io to be compatible with older browsers
+polyfill = false
+# whether to use object-fit-images to be compatible with older browsers
+objectFit = false
+
+# FixIt 0.2.16 | NEW Back to top
+[params.backToTop]
+enable = true
+# FixIt 0.4.0 | CHANGED whether to show the scroll percent indicator around the back to top button
+scrollpercent = true
+
+# FixIt 0.2.16 | NEW Reading progress bar
+[params.readingProgress]
+enable = true
+# Available values: ["left", "right"]
+start = "left"
+# Available values: ["top", "bottom"]
+position = "top"
+reversed = false
+light = ""
+dark = ""
+height = "2px"
+
+[params.codeblock]
+# whether to enable the code block wrapper
+wrapper = true
+# code block mode
+# available modes: ["classic", "mac", "simple", ...]
+# if you set to custom value, you need to create a custom CSS for data-mode attribute
+mode = "classic"
+# additional classes for the code block wrapper
+# e.g. "is-collapsed is-expanded line-nos-hidden line-wrapping"
+wrapperClass = ""
+# the maximum number of lines to show in the code block preview
+maxShownLines = 20
+# whether to enable code copy button
+copyable = true
+# [classic] whether to enable line numbers toggle button in the code block header
+lineNosToggler = true
+# [classic] whether to enable toggle line wrapping button in the code block header
+lineWrapToggler = true
+# [classic][Experimental] whether to enable code edit button in the code block header
+editable = false
+
+# FixIt 0.4.0 | NEW JSON Viewer config
+# See https://github.com/Lruihao/json-viewer-element
+[params.jsonViewer]
+enable = true
+expandDepth = 1
+copyable = true
+sort = false
+boxed = true

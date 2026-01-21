@@ -1,16 +1,24 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Encryption - Tag - Oleg Bilovus&#39;s Tech Blog</title>
-        <link>https://bilovus.com/tags/encryption/</link>
-        <description>Encryption - Tag - Oleg Bilovus&#39;s Tech Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/tags/encryption/" rel="self" type="application/rss+xml" /><item>
-    <title>Secure Offline Data Storage on Wear OS Using Steganography</title>
-    <link>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</link>
-    <pubDate>Tue, 20 Jan 2026 16:13:10 &#43;0100</pubDate>
-    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</guid>
-    <description><![CDATA[A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Encryption - Tag - Oleg Bilovus&#39;s Tech Blog</title>
+    <link>https://bilovus.com/tags/encryption/</link>
+    <description>A tech blog where I share my knowledge and experiences on programming, web development, and technology.</description>
+    <generator>Hugo 0.154.5 &amp; FixIt v0.4.2</generator>
+    <language>en</language>
+    <managingEditor>contact@bilovus.com (Oleg Bilovus)</managingEditor>
+    <webMaster>contact@bilovus.com (Oleg Bilovus)</webMaster>
+    <lastBuildDate>Tue, 20 Jan 2026 16:13:10 +0100</lastBuildDate>
+    <atom:link href="https://bilovus.com/tags/encryption/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Secure Offline Data Storage on Wear OS Using Steganography</title>
+      <link>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</link>
+      <pubDate>Tue, 20 Jan 2026 16:13:10 +0100</pubDate><author>contact@bilovus.com (Oleg Bilovus)</author>
+      <guid>https://bilovus.com/posts/secure-offline-data-storage-wear-os/</guid>
+      <category domain="https://bilovus.com/categories/security/">Security</category>
+      <category domain="https://bilovus.com/categories/wearables/">Wearables</category>
+      <category domain="https://bilovus.com/categories/android/">Android</category>
+      <description>A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.</description>
+    </item>
+  </channel>
 </rss>

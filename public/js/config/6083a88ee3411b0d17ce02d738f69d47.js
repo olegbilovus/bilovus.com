@@ -1,0 +1,1 @@
+window.config={"comment":{"enable":false},"cse":{"cx":"479a2da030316461a","engine":"google","gotoResultsPage":"Go to search results page ...","resultsPage":"/search/","searchIn":"Search in Google"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"cse"},"version":"v0.4.2"};
