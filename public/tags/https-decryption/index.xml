@@ -1,16 +1,24 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Https-Decryption - Tag - Oleg Bilovus&#39;s Tech Blog</title>
-        <link>https://bilovus.com/tags/https-decryption/</link>
-        <description>Https-Decryption - Tag - Oleg Bilovus&#39;s Tech Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>contact[at]bilovus.com (Oleg Bilovus)</managingEditor>
-            <webMaster>contact[at]bilovus.com (Oleg Bilovus)</webMaster><lastBuildDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</lastBuildDate><atom:link href="https://bilovus.com/tags/https-decryption/" rel="self" type="application/rss+xml" /><item>
-    <title>Capture Network Traffic on Mobile Devices</title>
-    <link>https://bilovus.com/posts/capture_network_mobile/</link>
-    <pubDate>Sat, 15 Nov 2025 18:21:02 &#43;0100</pubDate>
-    <author>contact[at]bilovus.com (Oleg Bilovus)</author>
-    <guid>https://bilovus.com/posts/capture_network_mobile/</guid>
-    <description><![CDATA[A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark.]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Https-Decryption - Tag - Oleg Bilovus&#39;s Tech Blog</title>
+    <link>https://bilovus.com/tags/https-decryption/</link>
+    <description>A tech blog where I share my knowledge and experiences on programming, web development, and technology.</description>
+    <generator>Hugo 0.154.5 &amp; FixIt v0.4.2</generator>
+    <language>en</language>
+    <managingEditor>contact@bilovus.com (Oleg Bilovus)</managingEditor>
+    <webMaster>contact@bilovus.com (Oleg Bilovus)</webMaster>
+    <lastBuildDate>Tue, 20 Jan 2026 16:13:10 +0100</lastBuildDate>
+    <atom:link href="https://bilovus.com/tags/https-decryption/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Capture Network Traffic on Mobile Devices</title>
+      <link>https://bilovus.com/posts/capture_network_mobile/</link>
+      <pubDate>Sat, 15 Nov 2025 18:21:02 +0100</pubDate><author>contact@bilovus.com (Oleg Bilovus)</author>
+      <guid>https://bilovus.com/posts/capture_network_mobile/</guid>
+      <category domain="https://bilovus.com/categories/android/">Android</category>
+      <category domain="https://bilovus.com/categories/networking/">Networking</category>
+      <category domain="https://bilovus.com/categories/security/">Security</category>
+      <description>A guide to capturing and analyzing mobile network traffic using invasive methods (PCAPdroid, Mitmproxy) and non-invasive techniques (OpenWRT router with tcpdump, port mirroring, LAN tap). Includes HTTPS decryption and real-time monitoring with Wireshark.</description>
+    </item>
+  </channel>
 </rss>

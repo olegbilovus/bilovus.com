@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Secure Offline Data Storage on Wear OS Using Steganography - Oleg Bilovus&#39;s Tech Blog</title><meta name="Description" content="A tech blog where I share my knowledge and experiences on programming, web development, and technology."><meta property="og:url" content="https://bilovus.com/posts/secure-offline-data-storage-wear-os/">
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Secure Offline Data Storage on Wear OS Using Steganography - Oleg Bilovus&#39;s Tech Blog</title><meta name="author" content="Oleg Bilovus">
+<meta name="description" content="A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies."><meta name="keywords" content='steganography, encryption, wear-os, adb, termux, offline-storage, steghide, openssl, emergency-backup, privacy'>
+  <meta itemprop="name" content="Secure Offline Data Storage on Wear OS Using Steganography">
+  <meta itemprop="description" content="A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.">
+  <meta itemprop="datePublished" content="2026-01-20T16:13:10+01:00">
+  <meta itemprop="dateModified" content="2026-01-20T16:13:10+01:00">
+  <meta itemprop="wordCount" content="1337">
+  <meta itemprop="keywords" content="Steganography,Encryption,Wear-Os,Adb,Termux,Offline-Storage,Steghide,Openssl,Emergency-Backup,Privacy"><meta property="og:url" content="https://bilovus.com/posts/secure-offline-data-storage-wear-os/">
   <meta property="og:site_name" content="Oleg Bilovus&#39;s Tech Blog">
   <meta property="og:title" content="Secure Offline Data Storage on Wear OS Using Steganography">
   <meta property="og:description" content="A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.">
@@ -23,96 +30,100 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Secure Offline Data Storage on Wear OS Using Steganography">
   <meta name="twitter:description" content="A technical guide to storing encrypted sensitive data on Wear OS smartwatches using steganography. This method combines Steghide and OpenSSL to embed encrypted data within audio files, which can be transferred to and from a smartwatch using ADB, providing offline access to important information during emergencies.">
-<meta name="application-name" content="Oleg Bilovus&#39;s Tech Blog">
-<meta name="apple-mobile-web-app-title" content="Oleg Bilovus&#39;s Tech Blog">
-<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" /><link rel="prev" href="https://bilovus.com/posts/capture_network_mobile/" /><link rel="stylesheet" href="/css/style.min.c935ac3e67aabf8ffa880ec9a72bbd0fe11259f5ae50cb70025e417a80015536.css" integrity="sha256-yTWsPmeqv4/6iA7Jpyu9D+ESWfWuUMtwAl5BeoABVTY="><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Secure Offline Data Storage on Wear OS Using Steganography",
-        "inLanguage": "en",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https:\/\/bilovus.com\/posts\/secure-offline-data-storage-wear-os\/"
-        },"genre": "posts","keywords": "steganography, encryption, wear-os, adb, termux, offline-storage, steghide, openssl, emergency-backup, privacy","wordcount":  1320 ,
-        "url": "https:\/\/bilovus.com\/posts\/secure-offline-data-storage-wear-os\/","datePublished": "2026-01-20T16:13:10+01:00","dateModified": "2026-01-20T16:13:10+01:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Oleg Bilovus"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
-          const query = window.matchMedia('(prefers-color-scheme: dark)');
-          function applyTheme() {
-            let theme = window.localStorage?.getItem('theme') || 'auto';
-            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
-            document.body.setAttribute('theme', isDark? 'dark' : 'light');
-            document.body.setAttribute('cfg-theme', theme);
-          }
-
-          applyTheme();
-          query.addEventListener('change', applyTheme);
-        </script>
-
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<meta name="application-name" content="Oleg Bilovus&#39;&#39;s Tech Blog">
+<meta name="apple-mobile-web-app-title" content="Oleg Bilovus&#39;&#39;s Tech Blog"><meta name="theme-color" data-light="#ffffff" data-dark="#252627" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" title="Secure Offline Data Storage on Wear OS Using Steganography - Oleg Bilovus&#39;s Tech Blog" /><link rel="prev" type="text/html" href="https://bilovus.com/posts/capture_network_mobile/" title="Capture Network Traffic on Mobile Devices" /><link rel="alternate" type="text/markdown" href="https://bilovus.com/posts/secure-offline-data-storage-wear-os/index.md" title="Secure Offline Data Storage on Wear OS Using Steganography - Oleg Bilovus's Tech Blog"><link rel="stylesheet" href="/css/config.min.edcf12a20c095857f60c14e145d8be29ece19cc0db3d2920f3a5d91af1bf37dd.css" integrity="sha256-7c8SogwJWFf2DBThRdi+KezhnMDbPSkg86XZGvG/N90="><link rel="stylesheet" href="/css/style.min.cf4e0ddf972cf265b13de8251c267dbbfaaf708991b09e53b6ff56ae600fe496.css" integrity="sha256-z04N35cs8mWxPeglHCZ9u/qvcImRsJ5Ttv9WrmAP5JY="><link rel="preload" href="/lib/fontawesome-free/all.min.961db4b355491b4bcd300fb6af555f05b7fafd1110b79adeac830ca5bee19d72.css" integrity="sha256-lh20s1VJG0vNMA+2r1VfBbf6/REQt5rerIMMpb7hnXI=" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.961db4b355491b4bcd300fb6af555f05b7fafd1110b79adeac830ca5bee19d72.css" integrity="sha256-lh20s1VJG0vNMA+2r1VfBbf6/REQt5rerIMMpb7hnXI="></noscript><link rel="preload" href="/lib/animate/animate.min.a61e123314188bd0453320008e01b4bbb665bee09039f4cbd9bef44de410ce67.css" integrity="sha256-ph4SMxQYi9BFMyAAjgG0u7ZlvuCQOfTL2b70TeQQzmc=" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.a61e123314188bd0453320008e01b4bbb665bee09039f4cbd9bef44de410ce67.css" integrity="sha256-ph4SMxQYi9BFMyAAjgG0u7ZlvuCQOfTL2b70TeQQzmc="></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Secure Offline Data Storage on Wear OS Using Steganography",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/bilovus.com\/posts\/secure-offline-data-storage-wear-os\/"
+    },"genre": "posts","keywords": "steganography, encryption, wear-os, adb, termux, offline-storage, steghide, openssl, emergency-backup, privacy","wordcount":  1337 ,
+    "url": "https:\/\/bilovus.com\/posts\/secure-offline-data-storage-wear-os\/","datePublished": "2026-01-20T16:13:10+01:00","dateModified": "2026-01-20T16:13:10+01:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Oleg Bilovus"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.69f5cf37e9eb7ae9de2a537ee9a73161155340dc71103ddd157f324edef64758.js" integrity="sha256-afXPN+nreuneKlN+6acxYRVTQNxxED3dFX8yTt72R1g="></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img class="logo" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus&#39;s Tech Blog" height="32" width="32"><span class="header-title-text">Oleg Bilovus&#39;s Tech Blog</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-file fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-user-circle fa-sm" aria-hidden="true"></i> About Me</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="Search..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+              <i class="fa-solid fa-times-circle" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" role="button" aria-label="Switch Theme" title="Switch Theme"><i class="fa-solid fa-adjust" aria-hidden="true"></i></li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
     <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img
-        class="lazyload logo"
-        src="/svg/loading.min.svg"
-        data-src="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials"
-        data-srcset="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials, https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials 1.5x, https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials 2x"
-        data-sizes="auto"
-        alt="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials"
-        title="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials" />Oleg Bilovus&#39;s Tech Blog</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About Me </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a></div>
-        </div>
+      <div class="header-title">
+        <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img class="logo" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus&#39;s Tech Blog" height="26" width="26"><span class="header-title-text">Oleg Bilovus&#39;s Tech Blog</span></a><span class="header-subtitle"></span></div>
+      <div class="theme-switch" role="button" aria-label="Switch Theme"><i class="fa-solid fa-adjust" aria-hidden="true"></i></div>
+      <div class="menu-toggle" id="menu-toggle-mobile" role="button" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </div>
     </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img
-        class="lazyload logo"
-        src="/svg/loading.min.svg"
-        data-src="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials"
-        data-srcset="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials, https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials 1.5x, https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials 2x"
-        data-sizes="auto"
-        alt="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials"
-        title="https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&amp;d=initials" />Oleg Bilovus&#39;s Tech Blog</a>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="Search..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                <i class="fa-solid fa-search" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                <i class="fa-solid fa-times-circle" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+              </span>
             </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              Cancel
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-file fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-user-circle fa-sm" aria-hidden="true"></i> About Me</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Secure Offline Data Storage on Wear OS Using Steganography</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://bilovus.com/about/" title="Author" target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img class="avatar" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus" height="16" width="16">&nbsp;Oleg Bilovus</a></span><span class="post-included-in">&nbsp;included in <a href="/categories/security/" class="post-category" title="Category - Security"><i class="fa-regular fa-folder" aria-hidden="true"></i> Security</a>&ensp;<a href="/categories/wearables/" class="post-category" title="Category - Wearables"><i class="fa-regular fa-folder" aria-hidden="true"></i> Wearables</a>&ensp;<a href="/categories/android/" class="post-category" title="Category - Android"><i class="fa-regular fa-folder" aria-hidden="true"></i> Android</a></span></div><div class="post-meta-line"><span title="published on 2026-01-20 16:13:10"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-01-20">2026-01-20</time></span>&nbsp;<span title="1337 words"><i class="fa-solid fa-pencil-alt me-1" aria-hidden="true"></i>About 1400 words</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About Me</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
-    </div>
-</header><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Secure Offline Data Storage on Wear OS Using Steganography</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://bilovus.com/about/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Oleg Bilovus</a></span>&nbsp;<span class="post-category">included in <a href="/categories/security/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Security</a>&nbsp;<a href="/categories/wearables/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Wearables</a>&nbsp;<a href="/categories/android/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Android</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-01-20">2026-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1320 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>Contents</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#steganography-and-encryption-tools">Steganography and Encryption Tools</a></li>
     <li><a href="#choosing-the-audio-file">Choosing the Audio File</a></li>
@@ -123,72 +134,104 @@
     <li><a href="#security-considerations">Security Considerations</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>In emergency situations, access to important data such as digital IDs, passwords, 2FA codes, and emergency contacts may be critical. While smartphones typically store this information, they may not always be accessible. Smartwatches, particularly those running Wear OS, offer an alternative storage option that remains physically accessible.</p>
+      </div><div class="content" id="content"><p>In emergency situations, access to important data such as digital IDs, passwords, 2FA codes, and emergency contacts may be critical. While smartphones typically store this information, they may not always be accessible. Smartwatches, particularly those running Wear OS, offer an alternative storage option that remains physically accessible.</p>
 <p>While encrypted cloud backups provide data redundancy, a local copy stored on a wearable device can offer immediate access during emergencies.</p>
 <p>Combining steganography with encryption provides a secure method for storing data on Wear OS devices. This approach embeds encrypted data within an audio file, which can then be stored on the smartwatch. Wear OS does not provide direct file system access through a native &ldquo;Files&rdquo; app like Android phones. However, <em>ADB (Android Debug Bridge)</em> can be used to transfer files to and from the smartwatch.</p>
 <p>Periodic updates to the stored data can be accomplished directly from an Android phone without requiring a computer. This can be achieved using two apps:</p>
 <ol>
-<li><a href="https://f-droid.org/packages/com.termux/" target="_blank" rel="noopener noreffer "><strong>Termux</strong></a>: A terminal emulator for Android that enables the use of steganography and encryption tools directly on the phone.</li>
-<li><a href="https://play.google.com/store/apps/details?id=com.github.standardadb" target="_blank" rel="noopener noreffer "><strong>ADB Shell - Debug Toolbox</strong></a>: An app that facilitates file transfers between the phone and smartwatch using ADB commands through a graphical user interface. Some features may require the pro version.</li>
+<li><a href="https://f-droid.org/packages/com.termux/" target="_blank" rel="external nofollow noopener noreferrer"><strong>Termux</strong></a>: A terminal emulator for Android that enables the use of steganography and encryption tools directly on the phone.</li>
+<li><a href="https://play.google.com/store/apps/details?id=com.github.standardadb" target="_blank" rel="external nofollow noopener noreferrer"><strong>ADB Shell - Debug Toolbox</strong></a>: An app that facilitates file transfers between the phone and smartwatch using ADB commands through a graphical user interface. Some features may require the pro version.</li>
 </ol>
-<p>At the end of this guide, in <a href="#security-considerations" rel=""><strong>Security Considerations</strong></a>, there are important points to consider regarding the security of this method.</p>
-<h2 id="steganography-and-encryption-tools">Steganography and Encryption Tools</h2>
-<p>The steganography tool used is <a href="http://steghide.sourceforge.net/" target="_blank" rel="noopener noreffer "><strong>Steghide</strong></a>, a command-line utility that embeds data within audio files. For encryption, <a href="https://www.openssl.org/" target="_blank" rel="noopener noreffer "><strong>Openssl</strong></a> is used, a widely adopted tool for secure data encryption.</p>
+<p>At the end of this guide, in <a href="#security-considerations"><strong>Security Considerations</strong></a>, there are important points to consider regarding the security of this method.</p>
+<h2 class="heading-element" id="steganography-and-encryption-tools"><span>Steganography and Encryption Tools</span>
+  <a href="#steganography-and-encryption-tools" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>The steganography tool used is <a href="http://steghide.sourceforge.net/" target="_blank" rel="external nofollow noopener noreferrer"><strong>Steghide</strong></a>, a command-line utility that embeds data within audio files. For encryption, <a href="https://www.openssl.org/" target="_blank" rel="external nofollow noopener noreferrer"><strong>Openssl</strong></a> is used, a widely adopted tool for secure data encryption.</p>
 <p>To install these tools in Termux, run the following commands:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-bash">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pkg update
-</span></span><span class="line"><span class="cl">pkg install steghide openssl</span></span></code></pre></div></div>
-<h2 id="choosing-the-audio-file">Choosing the Audio File</h2>
-<p>A WAV audio file serves as an appropriate carrier for the data. WAV files are uncompressed and provide sufficient space to hide encrypted data without significantly altering audio quality. Long-form audio content, such as music compilations of at least one hour, provides ample capacity for data storage.</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pkg update
+</span></span><span class="line"><span class="cl">pkg install steghide openssl</span></span></code></pre></td></tr></table></div>
+</div>
+</div><h2 class="heading-element" id="choosing-the-audio-file"><span>Choosing the Audio File</span>
+  <a href="#choosing-the-audio-file" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>A WAV audio file serves as an appropriate carrier for the data. WAV files are uncompressed and provide sufficient space to hide encrypted data without significantly altering audio quality. Long-form audio content, such as music compilations of at least one hour, provides ample capacity for data storage.</p>
 <p>The audio file can be transferred from phone storage to the Termux home directory. Selecting the file and choosing Termux from the share menu will automatically copy it to the Termux downloads folder at <code>/data/data/com.termux/files/home/storage/downloads/</code>.</p>
-<h2 id="encrypting-and-embedding-data">Encrypting and Embedding Data</h2>
-<p>Once the audio file and the data file (e.g., <code>data.txt</code>) are in Termux, the following commands can be used to encrypt and embed the data:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-bash">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Encrypt the data file</span>
+<h2 class="heading-element" id="encrypting-and-embedding-data"><span>Encrypting and Embedding Data</span>
+  <a href="#encrypting-and-embedding-data" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Once the audio file and the data file (e.g., <code>data.txt</code>) are in Termux, the following commands can be used to encrypt and embed the data:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Encrypt the data file</span>
 </span></span><span class="line"><span class="cl">openssl enc -aes-256-cbc -salt -pbkdf2 -in data.txt -out data.enc -pass pass:your_password
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Embed the encrypted data into the audio file</span>
 </span></span><span class="line"><span class="cl">steghide embed -cf your_audio.wav -ef data.enc
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># You will be prompted to set a passphrase for steghide</span></span></span></code></pre></div></div>
-<p>Replace <code>your_password</code> with a password of your choice. The <code>data.txt</code> file contains the sensitive information you wish to store securely.</p>
+</span></span><span class="line"><span class="cl"><span class="c1"># You will be prompted to set a passphrase for steghide</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>Replace <code>your_password</code> with a password of your choice. The <code>data.txt</code> file contains the sensitive information you wish to store securely.</p>
 <p>The openssl encryption could be skipped if the steghide passphrase is deemed sufficient for the security requirements.</p>
 <p>The data does not have to be in a text file; it can be any file type, such as images, PDFs, or an archive containing multiple files.</p>
-<h2 id="decrypting-and-extracting-data">Decrypting and Extracting Data</h2>
-<p>Before transferring the audio file to the smartwatch, it is advisable to test the extraction and decryption process in Termux:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-bash">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Extract the embedded data from the audio file</span>
+<h2 class="heading-element" id="decrypting-and-extracting-data"><span>Decrypting and Extracting Data</span>
+  <a href="#decrypting-and-extracting-data" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Before transferring the audio file to the smartwatch, it is advisable to test the extraction and decryption process in Termux:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Extract the embedded data from the audio file</span>
 </span></span><span class="line"><span class="cl">steghide extract -sf your_audio.wav
 </span></span><span class="line"><span class="cl"><span class="c1"># You will be prompted for the steghide passphrase</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Decrypt the extracted data file</span>
 </span></span><span class="line"><span class="cl">openssl enc -d -aes-256-cbc -pbkdf2 -in data.enc
-</span></span><span class="line"><span class="cl"><span class="c1"># You will be prompted for the openssl password</span></span></span></code></pre></div></div>
-<p><em>Steghide</em> will extract the embedded file as <code>data.enc</code>, which can then be decrypted to retrieve the original data. It will use the name of the original file when it was embedded. If you gave it a different name, it will use that.</p>
+</span></span><span class="line"><span class="cl"><span class="c1"># You will be prompted for the openssl password</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p><em>Steghide</em> will extract the embedded file as <code>data.enc</code>, which can then be decrypted to retrieve the original data. It will use the name of the original file when it was embedded. If you gave it a different name, it will use that.</p>
 <p>Check that the decrypted file matches the original data file to ensure the process works correctly.</p>
 <p>The encrypted data in the audio file will persist until it is overwritten or the audio file is deleted, the extraction process will not remove it from the audio file.</p>
 <p>Once we have confirmed that the process works, we can proceed to move/copy the audio file outside of Termux to prepare for transfer to the smartwatch. Simply use the <code>cp</code> command to copy the audio file from Termux storage to phone storage:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-bash">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp your_audio.wav /data/data/com.termux/files/home/storage/shared/Music/</span></span></code></pre></div></div>
-<p>This copies the audio file to the phone&rsquo;s Music folder, making the file accessible for transfer to the smartwatch.</p>
-<h2 id="transferring-the-audio-file-to-the-smartwatch">Transferring the Audio File to the Smartwatch</h2>
-<p>Before transferring the audio file to the smartwatch, ensure that:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp your_audio.wav /data/data/com.termux/files/home/storage/shared/Music/</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>This copies the audio file to the phone&rsquo;s Music folder, making the file accessible for transfer to the smartwatch.</p>
+<h2 class="heading-element" id="transferring-the-audio-file-to-the-smartwatch"><span>Transferring the Audio File to the Smartwatch</span>
+  <a href="#transferring-the-audio-file-to-the-smartwatch" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Before transferring the audio file to the smartwatch, ensure that:</p>
 <ol>
 <li>Developer options are enabled on the smartwatch.</li>
 <li>Wireless debugging (ADB over Wi-Fi) is enabled on the smartwatch.</li>
@@ -231,50 +274,76 @@
             <img style="width: 100%; height: auto; display: block;" src="/images/posts/secure-offline-data-storage-wear-os/step5.jpg" alt="Step 5: Verify File on Smartwatch" decoding="async" />
         </a><p style="text-align: center; font-style: italic; margin-top: 0.5rem; color: #666;">Step 5: Verify File on Smartwatch</p></div></div>
 
-<h2 id="transferring-the-audio-file-back-to-the-phone">Transferring the Audio File Back to the Phone</h2>
-<p>To retrieve the audio file from the smartwatch, connect to the smartwatch using the ADB Shell - Debug Toolbox app and navigate to the directory containing the audio file using the &ldquo;Device files&rdquo; option. Select the audio file options menu (three vertical dots) and choose &ldquo;Pull file&rdquo;. Set a destination directory on the phone. A toast notification will indicate the transfer progress, followed by a success notification when complete.</p>
-<p>The decryption and extraction process can then be performed in Termux as described earlier in the <a href="#decrypting-and-extracting-data" rel="">Decrypting and Extracting Data</a> section.</p>
-<h2 id="security-considerations">Security Considerations</h2>
-<p>If the smartwatch is lost or stolen, an attacker with physical access to the device could potentially extract the audio file using ADB commands. However, without the steghide passphrase and the openssl password (if used), the data remains protected.</p>
+<h2 class="heading-element" id="transferring-the-audio-file-back-to-the-phone"><span>Transferring the Audio File Back to the Phone</span>
+  <a href="#transferring-the-audio-file-back-to-the-phone" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>To retrieve the audio file from the smartwatch, connect to the smartwatch using the ADB Shell - Debug Toolbox app and navigate to the directory containing the audio file using the &ldquo;Device files&rdquo; option. Select the audio file options menu (three vertical dots) and choose &ldquo;Pull file&rdquo;. Set a destination directory on the phone. A toast notification will indicate the transfer progress, followed by a success notification when complete.</p>
+<p>The decryption and extraction process can then be performed in Termux as described earlier in the <a href="#decrypting-and-extracting-data">Decrypting and Extracting Data</a> section.</p>
+<h2 class="heading-element" id="security-considerations"><span>Security Considerations</span>
+  <a href="#security-considerations" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>If the smartwatch is lost or stolen, an attacker with physical access to the device could potentially extract the audio file using ADB commands. However, without the steghide passphrase and the openssl password (if used), the data remains protected.</p>
 <p>Choose a steghide and openssl passphrase that you can remember in an emergency. If you&rsquo;re a high risk profile, use a stronger passphrase. If not, pick one that&rsquo;s easy to recall when you don&rsquo;t have access to your password manager.</p>
 <p>Even if the smartwatch is lost or stolen, attackers are unlikely to examine audio files for hidden data unless specifically targeting the owner. The use of steganography adds an additional layer of obscurity, making it less likely that the presence of sensitive data would be detected. Stolen smartwatches are typically reset to factory settings and resold rather than examined for hidden data.</p>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>Updated on 2026-01-20</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-title="Secure Offline Data Storage on Wear OS Using Steganography" data-hashtags="steganography,encryption,wear-os,adb,termux,offline-storage,steghide,openssl,emergency-backup,privacy"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-title="Secure Offline Data Storage on Wear OS Using Steganography"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-hashtag="steganography"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-title="Secure Offline Data Storage on Wear OS Using Steganography"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=https%3a%2f%2fbilovus.com%2fposts%2fsecure-offline-data-storage-wear-os%2f&amp;text=Secure%20Offline%20Data%20Storage%20on%20Wear%20OS%20Using%20Steganography" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
-            </div>
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="Updated on 2026-01-20 16:13:10">Updated on 2026-01-20&nbsp;<a class="git-hash" href="https://github.com/olegbilovus/bilovus.com/commit/9080ddfaaaa33371ad72657cce46a6dc6fa3b0c0" rel="external nofollow noopener noreferrer" target="_blank" title="post: Secure Offline Data Storage on Wear OS Using Steganography (#3)&#10* fix: fix images width
+
+fix: neutral tone for the capture network mobile post
+
+feat: new post
+
+* update lastmod&#10Commit: 9080ddfaaaa33371ad72657cce46a6dc6fa3b0c0 [9080ddf]&#10Author: Oleg Bilovus&lt;68842946&#43;olegbilovus@users.noreply.github.com&gt;&#10Date: 2026-01-20 19:38:55"><i class="fa-solid fa-hashtag" aria-hidden="true"></i>9080ddf</a></span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"><span><a href="/posts/secure-offline-data-storage-wear-os/index.md" title="Read Markdown" class="link-to-markdown">Read Markdown</a></span><span><a href="https://github.com/olegbilovus/bilovus.com/blob/main/content/posts%5csecure-offline-data-storage-wear-os.md?plain=1" title="View source" target="_blank" rel="external nofollow noopener noreferrer" class="link-to-source">View source</a></span><span><a href="https://github.com/olegbilovus/bilovus.com/edit/main/content/posts%5csecure-offline-data-storage-wear-os.md" title="Edit this page" target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">Edit this page</a></span><span><a href="https://github.com/olegbilovus/bilovus.com/issues/new?title=[BUG]%20Secure&#43;Offline&#43;Data&#43;Storage&#43;on&#43;Wear&#43;OS&#43;Using&#43;Steganography&amp;body=%7cField%7cValue%7c%0A%7c-%7c-%7c%0A%7cTitle%7cSecure&#43;Offline&#43;Data&#43;Storage&#43;on&#43;Wear&#43;OS&#43;Using&#43;Steganography%7c%0A%7cURL%7chttps://bilovus.com/posts/secure-offline-data-storage-wear-os/%7c%0A%7cFilename%7chttps://github.com/olegbilovus/bilovus.com/blob/main/content/posts%5csecure-offline-data-storage-wear-os.md?plain=1%7c" title="Report issue" target="_blank" rel="external nofollow noopener noreferrer" class="link-to-report">Report issue</a></span></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="Share on X" data-sharer="twitter" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-title="Secure Offline Data Storage on Wear OS Using Steganography" data-hashtags="steganography,encryption,wear-os,adb,termux,offline-storage,steghide,openssl,emergency-backup,privacy"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-hashtag="steganography"><i class="fa-brands fa-facebook-square" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" data-title="Secure Offline Data Storage on Wear OS Using Steganography"><i class="fa-brands fa-hacker-news" aria-hidden="true"></i></a>
+  </span>
         </div>
-    </div>
+      </div></div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/steganography/">Steganography</a>,&nbsp;<a href="/tags/encryption/">Encryption</a>,&nbsp;<a href="/tags/wear-os/">Wear-Os</a>,&nbsp;<a href="/tags/adb/">Adb</a>,&nbsp;<a href="/tags/termux/">Termux</a>,&nbsp;<a href="/tags/offline-storage/">Offline-Storage</a>,&nbsp;<a href="/tags/steghide/">Steghide</a>,&nbsp;<a href="/tags/openssl/">Openssl</a>,&nbsp;<a href="/tags/emergency-backup/">Emergency-Backup</a>,&nbsp;<a href="/tags/privacy/">Privacy</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/posts/capture_network_mobile/" class="prev" rel="prev" title="Capture Network Traffic on Mobile Devices"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Capture Network Traffic on Mobile Devices</a></div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/steganography/" class="post-tag" title="Tags - Steganography">Steganography</a><a href="/tags/encryption/" class="post-tag" title="Tags - Encryption">Encryption</a><a href="/tags/wear-os/" class="post-tag" title="Tags - Wear-Os">Wear-Os</a><a href="/tags/adb/" class="post-tag" title="Tags - Adb">Adb</a><a href="/tags/termux/" class="post-tag" title="Tags - Termux">Termux</a><a href="/tags/offline-storage/" class="post-tag" title="Tags - Offline-Storage">Offline-Storage</a><a href="/tags/steghide/" class="post-tag" title="Tags - Steghide">Steghide</a><a href="/tags/openssl/" class="post-tag" title="Tags - Openssl">Openssl</a><a href="/tags/emergency-backup/" class="post-tag" title="Tags - Emergency-Backup">Emergency-Backup</a><a href="/tags/privacy/" class="post-tag" title="Tags - Privacy">Privacy</a></section>
+    <section><span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/capture_network_mobile/" class="post-nav-item" rel="prev" title="Capture Network Traffic on Mobile Devices"><i class="fa-solid fa-angle-left" aria-hidden="true"></i>Capture Network Traffic on Mobile Devices</a></div>
 </div>
-</article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2025 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://bilovus.com/about/" target="_blank">Oleg Bilovus</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+</article>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a>
-        </div>
-
-        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.2/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/mhchem.min.js"></script><script>window.config={"comment":{},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script src="/js/theme.min.769eafe095cf0d4abc4843d9fc4af7920da42c9970472c6d4547df4eb4530423.js" integrity="sha256-dp6v4JXPDUq8SEPZ/Er3kg2kLJlwRyxtRUffTrRTBCM="></script></body>
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside><dialog id="toc-dialog" aria-labelledby="toc-dialog-title" role="dialog">
+      <div class="toc">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-drawer"><nav >
+  <ul>
+    <li><a href="#steganography-and-encryption-tools">Steganography and Encryption Tools</a></li>
+    <li><a href="#choosing-the-audio-file">Choosing the Audio File</a></li>
+    <li><a href="#encrypting-and-embedding-data">Encrypting and Embedding Data</a></li>
+    <li><a href="#decrypting-and-extracting-data">Decrypting and Extracting Data</a></li>
+    <li><a href="#transferring-the-audio-file-to-the-smartwatch">Transferring the Audio File to the Smartwatch</a></li>
+    <li><a href="#transferring-the-audio-file-back-to-the-phone">Transferring the Audio File Back to the Phone</a></li>
+    <li><a href="#security-considerations">Security Considerations</a></li>
+  </ul>
+</nav></div>
+      </div>
+    </dialog></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.154.5"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2025 - 2026</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://bilovus.com/about/" target="_blank" rel="external nofollow noopener noreferrer">Oleg Bilovus</a></span><span class="license footer-divider"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons"><div class="fixed-button back-to-top animate__faster d-none" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i><svg viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="50"></circle>
+              <circle class="progress" cx="50" cy="50" r="50"></circle>
+            </svg></div><div id="toc-drawer-button" class="fixed-button toc-drawer-button d-none" role="button" aria-label="Contents"><i class="fa-solid fa-bars" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.120f067ebd6f322339e2ccccd7e87e334d7c7ea5b2bd553f325f2ae3c3ae6fe8.css" integrity="sha256-Eg8Gfr1vMiM54szM1+h+M018fqWyvVU/Ml8q48Oub+g="><script src="/lib/autocomplete/autocomplete.min.efcd9994416f8ef0e9904c0ebc34d39ab92f5fe72a60224553434d3a818b25e5.js" integrity="sha256-782ZlEFvjvDpkEwOvDTTmrkvX+cqYCJFU0NNOoGLJeU=" defer></script><script src="/lib/lightgallery/lightgallery.min.fd89888c69a37f6850ff5718231f26bf502310de8489dc5111da0db5d9f51b57.js" integrity="sha256-/YmIjGmjf2hQ/1cYIx8mv1AjEN6EidxREdoNtdn1G1c=" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.a502d6f402482d60810b3e6965bd06cac0290f5284a79037c90bece078ed29cd.js" integrity="sha256-pQLW9AJILWCBCz5pZb0GysApD1KEp5A3yQvs4HjtKc0=" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.d26a9098ce778cc15f30cf87b310bd6850f4d6601b06dbde5205454058b8cbc3.js" integrity="sha256-0mqQmM53jMFfMM+HsxC9aFD01mAbBtveUgVFQFi4y8M=" defer></script><script src="/lib/sharer/sharer.min.120e6e8efffc699bdbb3b51ae482f45d0b9670e4e3032651a29beac9d5692878.js" integrity="sha256-Eg5ujv/8aZvbs7Ua5IL0XQuWcOTjAyZRopvqydVpKHg=" async defer></script><script src="/js/config/176ca3107fc0b03521f83ee656a8d6a8.js" defer></script><script src="/js/theme.min.4c2338941a06dbbc7a7347ed4bd3b9ddd047de50ce4c07e11ecd8f7ad3588f43.js" integrity="sha256-TCM4lBoG27x6c0ftS9O53dBH3lDOTAfhHs2PetNYj0M=" defer></script></body>
 </html>
