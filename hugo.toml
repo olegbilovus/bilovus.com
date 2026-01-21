@@ -438,13 +438,13 @@ dark = "#252627"
 [params.search]
 enable = true
 # type of search engine ["algolia", "fuse", "cse", "post-chat"]
-type = "cse"
+type = "fuse"
 # max index length of the chunked content
 contentLength = 4000
 # placeholder of the search bar
 placeholder = "Search..."
 # max number of results length
-maxResultLength = 10
+maxResultLength = 5
 # snippet length of the result
 snippetLength = 50
 # HTML tag name of the highlight part in results
@@ -479,7 +479,7 @@ engine = "google"
 resultsPage = "/search/"
 
 [params.cse.google]
-cx = "479a2da030316461a"
+cx = ""
 
 # Header config
 [params.header]
@@ -629,15 +629,15 @@ fraction = true
 # whether to enable the fontawesome extended syntax
 fontawesome = true
 # whether to show link to Raw Markdown content of the content
-linkToMarkdown = true
+linkToMarkdown = false
 # FixIt 0.3.0 | NEW whether to show link to view source code of the post
 linkToSource = true
 # FixIt 0.3.0 | NEW whether to show link to edit the post
-linkToEdit = true
+linkToEdit = false
 # FixIt 0.3.0 | NEW whether to show link to report issue for the post
 linkToReport = true
 # FixIt 0.3.20 | NEW whether to show link to view the post in VSCode
-linkToVscode = true
+linkToVscode = false
 # whether to show the full text content in RSS
 rssFullText = false
 # FixIt 0.3.10 | CHANGED Page style ["narrow", "normal", "wide", ...]
