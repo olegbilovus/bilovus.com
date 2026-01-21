@@ -438,7 +438,7 @@ dark = "#252627"
 [params.search]
 enable = true
 # type of search engine ["algolia", "fuse", "cse", "post-chat"]
-type = "cse"
+type = "fuse"
 # max index length of the chunked content
 contentLength = 4000
 # placeholder of the search bar
@@ -479,7 +479,7 @@ engine = "google"
 resultsPage = "/search/"
 
 [params.cse.google]
-cx = "479a2da030316461a"
+cx = ""
 
 # Header config
 [params.header]
