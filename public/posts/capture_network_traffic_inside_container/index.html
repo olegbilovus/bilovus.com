@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Capture Network Traffic Inside a Container - Oleg Bilovus&#39;s Tech Blog</title><meta name="author" content="Oleg Bilovus">
+<meta name="description" content="A guide for capturing and analyzing network traffic from Docker containers using host-based packet capture with tcpdump and Wireshark&rsquo;s SSH remote capture functionality. Covers virtual interface identification, remote capture configuration, and performance considerations."><meta name="keywords" content='docker, tcpdump, wireshark, packet-capture, network-analysis, containers'>
+  <meta itemprop="name" content="Capture Network Traffic Inside a Container">
+  <meta itemprop="description" content="A guide for capturing and analyzing network traffic from Docker containers using host-based packet capture with tcpdump and Wireshark’s SSH remote capture functionality. Covers virtual interface identification, remote capture configuration, and performance considerations.">
+  <meta itemprop="datePublished" content="2026-02-21T14:53:17+01:00">
+  <meta itemprop="dateModified" content="2026-02-21T14:53:17+01:00">
+  <meta itemprop="wordCount" content="704">
+  <meta itemprop="keywords" content="Docker,Tcpdump,Wireshark,Packet-Capture,Network-Analysis,Containers"><meta property="og:url" content="https://bilovus.com/posts/capture_network_traffic_inside_container/">
+  <meta property="og:site_name" content="Oleg Bilovus&#39;s Tech Blog">
+  <meta property="og:title" content="Capture Network Traffic Inside a Container">
+  <meta property="og:description" content="A guide for capturing and analyzing network traffic from Docker containers using host-based packet capture with tcpdump and Wireshark’s SSH remote capture functionality. Covers virtual interface identification, remote capture configuration, and performance considerations.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-21T14:53:17+01:00">
+    <meta property="article:modified_time" content="2026-02-21T14:53:17+01:00">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="Tcpdump">
+    <meta property="article:tag" content="Wireshark">
+    <meta property="article:tag" content="Packet-Capture">
+    <meta property="article:tag" content="Network-Analysis">
+    <meta property="article:tag" content="Containers">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Capture Network Traffic Inside a Container">
+  <meta name="twitter:description" content="A guide for capturing and analyzing network traffic from Docker containers using host-based packet capture with tcpdump and Wireshark’s SSH remote capture functionality. Covers virtual interface identification, remote capture configuration, and performance considerations.">
+<meta name="application-name" content="Oleg Bilovus&#39;&#39;s Tech Blog">
+<meta name="apple-mobile-web-app-title" content="Oleg Bilovus&#39;&#39;s Tech Blog"><meta name="theme-color" data-light="#ffffff" data-dark="#252627" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://bilovus.com/posts/capture_network_traffic_inside_container/" title="Capture Network Traffic Inside a Container - Oleg Bilovus&#39;s Tech Blog" /><link rel="prev" type="text/html" href="https://bilovus.com/posts/secure-offline-data-storage-wear-os/" title="Secure Offline Data Storage on Wear OS Using Steganography" /><link rel="alternate" type="text/markdown" href="https://bilovus.com/posts/capture_network_traffic_inside_container/index.md" title="Capture Network Traffic Inside a Container - Oleg Bilovus's Tech Blog"><link rel="stylesheet" href="/css/config.min.edcf12a20c095857f60c14e145d8be29ece19cc0db3d2920f3a5d91af1bf37dd.css" integrity="sha256-7c8SogwJWFf2DBThRdi+KezhnMDbPSkg86XZGvG/N90="><link rel="stylesheet" href="/css/style.min.11ec66b5a39697370d27ba5f19c3d621816b695f98259dbe6b7c1fe637e927a5.css" integrity="sha256-EexmtaOWlzcNJ7pfGcPWIYFraV+YJZ2+a3wf5jfpJ6U="><link rel="preload" href="/lib/fontawesome-free/all.min.961db4b355491b4bcd300fb6af555f05b7fafd1110b79adeac830ca5bee19d72.css" integrity="sha256-lh20s1VJG0vNMA+2r1VfBbf6/REQt5rerIMMpb7hnXI=" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.961db4b355491b4bcd300fb6af555f05b7fafd1110b79adeac830ca5bee19d72.css" integrity="sha256-lh20s1VJG0vNMA+2r1VfBbf6/REQt5rerIMMpb7hnXI="></noscript><link rel="preload" href="/lib/animate/animate.min.a61e123314188bd0453320008e01b4bbb665bee09039f4cbd9bef44de410ce67.css" integrity="sha256-ph4SMxQYi9BFMyAAjgG0u7ZlvuCQOfTL2b70TeQQzmc=" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.a61e123314188bd0453320008e01b4bbb665bee09039f4cbd9bef44de410ce67.css" integrity="sha256-ph4SMxQYi9BFMyAAjgG0u7ZlvuCQOfTL2b70TeQQzmc="></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Capture Network Traffic Inside a Container",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/bilovus.com\/posts\/capture_network_traffic_inside_container\/"
+    },"genre": "posts","keywords": "docker, tcpdump, wireshark, packet-capture, network-analysis, containers","wordcount":  704 ,
+    "url": "https:\/\/bilovus.com\/posts\/capture_network_traffic_inside_container\/","datePublished": "2026-02-21T14:53:17+01:00","dateModified": "2026-02-21T14:53:17+01:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Oleg Bilovus"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.69f5cf37e9eb7ae9de2a537ee9a73161155340dc71103ddd157f324edef64758.js" integrity="sha256-afXPN+nreuneKlN+6acxYRVTQNxxED3dFX8yTt72R1g="></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img class="logo" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus&#39;s Tech Blog" height="32" width="32"><span class="header-title-text">Oleg Bilovus&#39;s Tech Blog</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-file fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-user-circle fa-sm" aria-hidden="true"></i> About Me</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="Search..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+              <i class="fa-solid fa-times-circle" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" role="button" aria-label="Switch Theme" title="Switch Theme"><i class="fa-solid fa-adjust" aria-hidden="true"></i></li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Oleg Bilovus&#39;s Tech Blog"><img class="logo" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus&#39;s Tech Blog" height="26" width="26"><span class="header-title-text">Oleg Bilovus&#39;s Tech Blog</span></a><span class="header-subtitle"></span></div>
+      <div class="theme-switch" role="button" aria-label="Switch Theme"><i class="fa-solid fa-adjust" aria-hidden="true"></i></div>
+      <div class="menu-toggle" id="menu-toggle-mobile" role="button" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="Search..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                <i class="fa-solid fa-search" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                <i class="fa-solid fa-times-circle" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              Cancel
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-file fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-user-circle fa-sm" aria-hidden="true"></i> About Me</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Capture Network Traffic Inside a Container</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://bilovus.com/about/" title="Author" target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img class="avatar" src='https://1.gravatar.com/avatar/268ae631934dbd631f4ec0e8a5694eb673ff3ca004ffb76802b3a22daeac44cb?size=512&d=initials' alt="Oleg Bilovus" height="16" width="16">&nbsp;Oleg Bilovus</a></span><span class="post-included-in">&nbsp;included in <a href="/categories/networking/" class="post-category" title="Category - Networking"><i class="fa-regular fa-folder" aria-hidden="true"></i> Networking</a>&ensp;<a href="/categories/security/" class="post-category" title="Category - Security"><i class="fa-regular fa-folder" aria-hidden="true"></i> Security</a>&ensp;<a href="/categories/docker/" class="post-category" title="Category - Docker"><i class="fa-regular fa-folder" aria-hidden="true"></i> Docker</a></span></div><div class="post-meta-line"><span title="published on 2026-02-21 14:53:17"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-02-21">2026-02-21</time></span>&nbsp;<span title="704 words"><i class="fa-solid fa-pencil-alt me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#system-requirements">System Requirements</a>
+      <ul>
+        <li><a href="#demonstration-environment-setup">Demonstration Environment Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#identifying-the-containers-virtual-network-interface">Identifying the Container&rsquo;s Virtual Network Interface</a></li>
+    <li><a href="#configuring-wireshark-for-remote-packet-capture">Configuring Wireshark for Remote Packet Capture</a>
+      <ul>
+        <li><a href="#capture-configuration-procedure">Capture Configuration Procedure</a></li>
+      </ul>
+    </li>
+    <li><a href="#performance-considerations">Performance Considerations</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>Network traffic analysis within containerized environments presents unique challenges due to the isolation mechanisms employed by container runtimes. This guide examines an approach to capturing and analyzing network traffic originating from Docker containers using <code>tcpdump</code> and Wireshark.</p>
+<p>The methodology described employs a host-based packet capture strategy, wherein <code>tcpdump</code> operates on the host machine to monitor traffic traversing the virtual network interfaces associated with container instances. Real-time analysis is facilitated through Wireshark&rsquo;s SSH remote capture functionality, which establishes a secure tunnel between the analyst&rsquo;s workstation and the host system.</p>
+<p>For demonstration purposes, this guide utilizes <a href="https://github.com/mccutchen/go-httpbin" target="_blank" rel="external nofollow noopener noreferrer">go-httpbin</a>, an HTTP testing service that implements various endpoints conforming to the httpbin specification. This container serves as a representative example of network traffic generation and inspection.</p>
+<h2 class="heading-element" id="system-requirements"><span>System Requirements</span>
+  <a href="#system-requirements" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>The following prerequisites must be satisfied to perform packet capture on containerized traffic:</p>
+<ul>
+<li>SSH access to the host machine running the container runtime</li>
+<li>Root or sudo privileges on the host system</li>
+<li><code>tcpdump</code> utility installed on the host machine</li>
+<li>Network interface identification tools (<code>ifconfig</code> or <code>ip</code>)</li>
+<li>Text filtering utilities (<code>grep</code>) for interface discovery</li>
+</ul>
+<h3 class="heading-element" id="demonstration-environment-setup"><span>Demonstration Environment Setup</span>
+  <a href="#demonstration-environment-setup" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>To isolate the target container&rsquo;s traffic from other network activity, a dedicated bridge network should be created. This approach simplifies the identification of the relevant virtual network interface and reduces noise in the captured data.</p>
+<p>Execute the following commands to establish the demonstration environment:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker network create go-httpbin-net
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run --name go-httpbin -p 8090:8080 --network go-httpbin-net -d ghcr.io/mccutchen/go-httpbin</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>This configuration creates an isolated network namespace for the go-httpbin container, binding the container&rsquo;s port 8080 to the host&rsquo;s port 8090.</p>
+<h2 class="heading-element" id="identifying-the-containers-virtual-network-interface"><span>Identifying the Container&rsquo;s Virtual Network Interface</span>
+  <a href="#identifying-the-containers-virtual-network-interface" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Docker containers communicate through virtual network interfaces created by the container runtime. To capture traffic specific to a container, the corresponding host-side virtual interface must be identified.</p>
+<p>The identification process begins by determining the container&rsquo;s network gateway address:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker inspect -f <span class="s1">&#39;{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}&#39;</span> go-httpbin</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>This command queries the container&rsquo;s network configuration and returns the gateway IP address assigned to the virtual bridge network. In this example, the expected output is <code>172.19.0.1</code>, corresponding to the <code>go-httpbin-net</code> network.</p>
+<p>Once the gateway address is known, the associated network interface can be located using standard network inspection tools:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ifconfig <span class="p">|</span> grep -B1 <span class="s2">&#34;172.19.0.1&#34;</span></span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>The output typically reveals a bridge interface with a naming pattern of <code>br-&lt;network_id&gt;</code>:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-text"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">br-299a8e72a394: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+</span></span><span class="line"><span class="cl">        inet 172.19.0.1  netmask 255.255.0.0  broadcast 172.19.255.255</span></span></code></pre></td></tr></table></div>
+</div>
+</div><p>In this instance, <code>br-299a8e72a394</code> represents the virtual bridge interface through which the container&rsquo;s network traffic is routed. Note that containers using Docker&rsquo;s default bridge network will typically show the interface name <code>docker0</code>.</p>
+<h2 class="heading-element" id="configuring-wireshark-for-remote-packet-capture"><span>Configuring Wireshark for Remote Packet Capture</span>
+  <a href="#configuring-wireshark-for-remote-packet-capture" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Wireshark supports remote packet capture through its <code>sshdump</code> extcap interface, which enables packet capture on remote systems via SSH. This functionality must be explicitly enabled during Wireshark installation on Windows systems.</p>
+<h3 class="heading-element" id="capture-configuration-procedure"><span>Capture Configuration Procedure</span>
+  <a href="#capture-configuration-procedure" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>The following steps establish a remote capture session:</p>
+<ol>
+<li>Launch Wireshark and open the Capture Options dialog (Ctrl + K).</li>
+<li>Locate the &ldquo;SSH remote capture: sshdump&rdquo; interface in the capture interfaces list.</li>
+<li>Select the configuration icon (gear icon) adjacent to the SSH interface entry.</li>
+<li>In the &ldquo;Server&rdquo; and &ldquo;Authentication&rdquo; sections, provide the SSH connection credentials and hostname for the container host.</li>
+<li>Configure the capture parameters in the &ldquo;Capture&rdquo; tab:
+<ol>
+<li>Set the &ldquo;Remote interface&rdquo; field to the identified bridge interface (e.g., <code>br-299a8e72a394</code>).</li>
+<li>Select &ldquo;tcpdump&rdquo; as the &ldquo;Remote capture command selection&rdquo;.</li>
+<li>Enable the &ldquo;Use sudo on the remote machine&rdquo; option, as packet capture operations require elevated privileges.</li>
+<li>Apply the configuration and initiate the capture session.</li>
+</ol>
+</li>
+</ol>
+<p>Upon successful connection, Wireshark will display real-time packet data from the specified container network interface. Traffic generated by accessing the go-httpbin service will appear in the packet list.</p>
+<h2 class="heading-element" id="performance-considerations"><span>Performance Considerations</span>
+  <a href="#performance-considerations" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Packet capture operations introduce overhead that may affect system performance. Key considerations include:</p>
+<ul>
+<li><strong>CPU Utilization</strong>: The <code>tcpdump</code> process consumes CPU cycles for packet copying and filtering. High-throughput environments may experience measurable performance degradation.</li>
+<li><strong>Disk I/O</strong>: Writing captures to disk generates I/O load. For extended captures, ensure adequate disk space and consider using capture filters to reduce data volume.</li>
+<li><strong>Network Latency</strong>: While minimal, the packet capture mechanism may introduce microsecond-scale latency variations.</li>
+</ul>
+<p>To minimize performance impact, employ BPF (Berkeley Packet Filter) expressions to filter packets at the kernel level:</p>
+<div class="code-block highlight" data-mode="classic" data-copyable="true"><div class="chroma">
+<div class="code-header language-bash"><span class="code-title"><i class="arrow fa-solid fa-chevron-down" aria-hidden="true"></i></span><span class="ellipses-btn" aria-label="Show more options" role="button"><i class="fa-solid fa-ellipsis-h" aria-hidden="true"></i></span><span class="line-nos-btn" aria-label="Toggle line numbers" role="button" title="Toggle line numbers"><i class="fa-solid fa-list-ol" aria-hidden="true"></i></span><span class="line-wrap-btn" aria-label="Toggle code wrap" role="button" title="Toggle code wrap"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span><span class="copy-btn" aria-label="Copy to clipboard" role="button" title="Copy to clipboard"><i class="fa-regular fa-clone" aria-hidden="true"></i></span></div><div class="code-wrapper" data-max="20" data-line-digit="1" style="--fi-max-shown-lines:20;--fi-line-digit:1;--fi-line-start:1;"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tcpdump -i br-299a8e72a394 -n <span class="s1">&#39;tcp port 8080&#39;</span> -w capture.pcap</span></span></code></pre></td></tr></table></div>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="Updated on 2026-02-21 14:53:17">Updated on 2026-02-21&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"><span><a href="https://github.com/olegbilovus/bilovus.com/blob/main/content/posts%5ccapture_network_traffic_inside_container.md?plain=1" title="View source" target="_blank" rel="external nofollow noopener noreferrer" class="link-to-source">View source</a></span><span><a href="https://github.com/olegbilovus/bilovus.com/issues/new?title=[BUG]%20Capture&#43;Network&#43;Traffic&#43;Inside&#43;a&#43;Container&amp;body=%7cField%7cValue%7c%0A%7c-%7c-%7c%0A%7cTitle%7cCapture&#43;Network&#43;Traffic&#43;Inside&#43;a&#43;Container%7c%0A%7cURL%7chttps://bilovus.com/posts/capture_network_traffic_inside_container/%7c%0A%7cFilename%7chttps://github.com/olegbilovus/bilovus.com/blob/main/content/posts%5ccapture_network_traffic_inside_container.md?plain=1%7c" title="Report issue" target="_blank" rel="external nofollow noopener noreferrer" class="link-to-report">Report issue</a></span></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="Share on X" data-sharer="twitter" data-url="https://bilovus.com/posts/capture_network_traffic_inside_container/" data-title="Capture Network Traffic Inside a Container" data-hashtags="docker,tcpdump,wireshark,packet-capture,network-analysis,containers"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://bilovus.com/posts/capture_network_traffic_inside_container/" data-hashtag="docker"><i class="fa-brands fa-facebook-square" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Linkedin" data-sharer="linkedin" data-url="https://bilovus.com/posts/capture_network_traffic_inside_container/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://bilovus.com/posts/capture_network_traffic_inside_container/" data-title="Capture Network Traffic Inside a Container"><i class="fa-brands fa-hacker-news" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/docker/" class="post-tag" title="Tags - Docker">Docker</a><a href="/tags/tcpdump/" class="post-tag" title="Tags - Tcpdump">Tcpdump</a><a href="/tags/wireshark/" class="post-tag" title="Tags - Wireshark">Wireshark</a><a href="/tags/packet-capture/" class="post-tag" title="Tags - Packet-Capture">Packet-Capture</a><a href="/tags/network-analysis/" class="post-tag" title="Tags - Network-Analysis">Network-Analysis</a><a href="/tags/containers/" class="post-tag" title="Tags - Containers">Containers</a></section>
+    <section><span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/secure-offline-data-storage-wear-os/" class="post-nav-item" rel="prev" title="Secure Offline Data Storage on Wear OS Using Steganography"><i class="fa-solid fa-angle-left" aria-hidden="true"></i>Secure Offline Data Storage on Wear OS Using Steganography</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside><dialog id="toc-dialog" aria-labelledby="toc-dialog-title" role="dialog">
+      <div class="toc">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-drawer"><nav >
+  <ul>
+    <li><a href="#system-requirements">System Requirements</a>
+      <ul>
+        <li><a href="#demonstration-environment-setup">Demonstration Environment Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#identifying-the-containers-virtual-network-interface">Identifying the Container&rsquo;s Virtual Network Interface</a></li>
+    <li><a href="#configuring-wireshark-for-remote-packet-capture">Configuring Wireshark for Remote Packet Capture</a>
+      <ul>
+        <li><a href="#capture-configuration-procedure">Capture Configuration Procedure</a></li>
+      </ul>
+    </li>
+    <li><a href="#performance-considerations">Performance Considerations</a></li>
+  </ul>
+</nav></div>
+      </div>
+    </dialog></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.156.0"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.3-20260130042349-e23a50d7"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2025 - 2026</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://bilovus.com/about/" target="_blank" rel="external nofollow noopener noreferrer">Oleg Bilovus</a></span><span class="license footer-divider"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons"><div class="fixed-button back-to-top animate__faster d-none" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i><svg viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="50"></circle>
+              <circle class="progress" cx="50" cy="50" r="50"></circle>
+            </svg></div><div id="toc-drawer-button" class="fixed-button toc-drawer-button d-none" role="button" aria-label="Contents"><i class="fa-solid fa-bars" aria-hidden="true"></i></div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.120f067ebd6f322339e2ccccd7e87e334d7c7ea5b2bd553f325f2ae3c3ae6fe8.css" integrity="sha256-Eg8Gfr1vMiM54szM1+h+M018fqWyvVU/Ml8q48Oub+g="><script src="/lib/autocomplete/autocomplete.min.efcd9994416f8ef0e9904c0ebc34d39ab92f5fe72a60224553434d3a818b25e5.js" integrity="sha256-782ZlEFvjvDpkEwOvDTTmrkvX+cqYCJFU0NNOoGLJeU=" defer></script><script src="/lib/fuse/fuse.min.376aba77efa1c95e9d886fb00af55c096607a5cc8eb58ea8b024faf3a44a9914.js" integrity="sha256-N2q6d++hyV6diG+wCvVcCWYHpcyOtY6osCT686RKmRQ=" defer></script><script src="/lib/lightgallery/lightgallery.min.fd89888c69a37f6850ff5718231f26bf502310de8489dc5111da0db5d9f51b57.js" integrity="sha256-/YmIjGmjf2hQ/1cYIx8mv1AjEN6EidxREdoNtdn1G1c=" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.a502d6f402482d60810b3e6965bd06cac0290f5284a79037c90bece078ed29cd.js" integrity="sha256-pQLW9AJILWCBCz5pZb0GysApD1KEp5A3yQvs4HjtKc0=" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.d26a9098ce778cc15f30cf87b310bd6850f4d6601b06dbde5205454058b8cbc3.js" integrity="sha256-0mqQmM53jMFfMM+HsxC9aFD01mAbBtveUgVFQFi4y8M=" defer></script><script src="/lib/sharer/sharer.min.120e6e8efffc699bdbb3b51ae482f45d0b9670e4e3032651a29beac9d5692878.js" integrity="sha256-Eg5ujv/8aZvbs7Ua5IL0XQuWcOTjAyZRopvqydVpKHg=" async defer></script><script src="/js/config/ef7266d0ba089754d5b12c712be9eb72.js" defer></script><script src="/js/theme.min.4c2338941a06dbbc7a7347ed4bd3b9ddd047de50ce4c07e11ecd8f7ad3588f43.js" integrity="sha256-TCM4lBoG27x6c0ftS9O53dBH3lDOTAfhHs2PetNYj0M=" defer></script></body>
+</html>

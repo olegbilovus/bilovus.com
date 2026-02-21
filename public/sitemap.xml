@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://bilovus.com/posts/capture_network_traffic_inside_container/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/categories/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/containers/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/categories/docker/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/docker/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/network-analysis/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/categories/networking/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/packet-capture/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/posts/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/categories/security/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/tcpdump/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://bilovus.com/tags/wireshark/</loc>
+    <lastmod>2026-02-21T14:53:17+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://bilovus.com/tags/adb/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -8,12 +92,6 @@
   </url>
   <url>
     <loc>https://bilovus.com/categories/android/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://bilovus.com/categories/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -37,19 +115,7 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://bilovus.com/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://bilovus.com/tags/openssl/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://bilovus.com/posts/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -67,12 +133,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://bilovus.com/categories/security/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://bilovus.com/tags/steganography/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -80,12 +140,6 @@
   </url>
   <url>
     <loc>https://bilovus.com/tags/steghide/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://bilovus.com/tags/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -139,12 +193,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://bilovus.com/categories/networking/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://bilovus.com/tags/openwrt/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -169,12 +217,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://bilovus.com/tags/tcpdump/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://bilovus.com/tags/traffic-monitoring/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -182,12 +224,6 @@
   </url>
   <url>
     <loc>https://bilovus.com/tags/vpn/</loc>
-    <lastmod>2026-01-20T16:13:10+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://bilovus.com/tags/wireshark/</loc>
     <lastmod>2026-01-20T16:13:10+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

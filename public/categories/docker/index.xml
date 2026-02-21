@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker - Category - Oleg Bilovus&#39;s Tech Blog</title>
+    <link>https://bilovus.com/categories/docker/</link>
+    <description>A tech blog where I share my knowledge and experiences on programming, web development, and technology.</description>
+    <generator>Hugo 0.156.0 &amp; FixIt v0.4.3-20260130042349-e23a50d7</generator>
+    <language>en</language>
+    <managingEditor>contact@bilovus.com (Oleg Bilovus)</managingEditor>
+    <webMaster>contact@bilovus.com (Oleg Bilovus)</webMaster>
+    <lastBuildDate>Sat, 21 Feb 2026 14:53:17 +0100</lastBuildDate>
+    <atom:link href="https://bilovus.com/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Capture Network Traffic Inside a Container</title>
+      <link>https://bilovus.com/posts/capture_network_traffic_inside_container/</link>
+      <pubDate>Sat, 21 Feb 2026 14:53:17 +0100</pubDate><author>contact@bilovus.com (Oleg Bilovus)</author>
+      <guid>https://bilovus.com/posts/capture_network_traffic_inside_container/</guid>
+      <category domain="https://bilovus.com/categories/networking/">Networking</category>
+      <category domain="https://bilovus.com/categories/security/">Security</category>
+      <category domain="https://bilovus.com/categories/docker/">Docker</category>
+      <description>A guide for capturing and analyzing network traffic from Docker containers using host-based packet capture with tcpdump and Wireshark&amp;rsquo;s SSH remote capture functionality. Covers virtual interface identification, remote capture configuration, and performance considerations.</description>
+    </item>
+  </channel>
+</rss>
