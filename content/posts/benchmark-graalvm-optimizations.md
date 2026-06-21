@@ -3,7 +3,20 @@ date: "2026-06-21T18:00:00+01:00"
 lastmod: "2026-06-21T18:00:00+01:00"
 draft: false
 categories: ["GraalVM", "Java", "Native Image", "Performance"]
-tags: ["native-image", "graalvm", "jvm", "spring-boot", "spring-ai", "build-time", "startup-time", "memory-usage", "benchmarking", "mcp-server", "java-21"]
+tags:
+  [
+    "native-image",
+    "graalvm",
+    "jvm",
+    "spring-boot",
+    "spring-ai",
+    "build-time",
+    "startup-time",
+    "memory-usage",
+    "benchmarking",
+    "mcp-server",
+    "java-21",
+  ]
 title: "Benchmark: GraalVM Native Image Optimizations"
 summary: "Benchmarking GraalVM native-image optimizations for build time, startup time, binary size, and idle memory. Comparing dynamic vs static builds and various optimization levels."
 ---
@@ -15,6 +28,7 @@ Ahead-of-time (AOT) compilation via GraalVM native-image is the canonical remedy
 {{< center_image src="/images/posts/benchmark-graalvm-optimizations/linking-options.png" alt="GraalVM linking options, from Alina Yurenko's Devoxx talk “Deep Dive: GraalVM in Practice”" width="100%" >}}
 
 {{< admonition info "Experimental setup" true >}}
+
 - **Hardware:** `docker-node` — 32 vCPU, 15,831 MB RAM
 - **Application:** MCP server on Spring Boot 4.0 (Spring AI 2.0.0-M4)
 - **Toolchain:** native images built with GraalVM 25; JVM baseline on Java 21 (HotSpot); built with Maven
@@ -30,14 +44,14 @@ Ten iterations per configuration is the basis for treating the results as eviden
 
 The principal measurements are collected in the table below.
 
-| Metric                      | JVM                      | Best native                   | Production (`dynamic / -O3`) |
-| --------------------------- | ------------------------ | ----------------------------- | ----------------------------- |
-| Build time (median)         | **5.75 s**               | 60.65 s (`dynamic / -Ob`)     | 110.95 s                      |
-| Startup time (median)       | 1,809 ms                 | **33 ms** (several combos)    | 33 ms                         |
-| Artifact size               | 49.3 MB _(jar only)_     | **65.4 MB** (`dynamic / -Os`) | 142.1 MB                      |
-| Idle memory (RSS, median)   | 252.4 MB                 | **79.0 MB** (`dynamic / -Os`) | 106.7 MB                      |
-| Peak CPU at startup         | **790 %** _(multi-core)_ | ~80 % _(single core)_         | ~80 %                         |
-| Time to idle (CPU < 1 %)    | 2,251 ms                 | **101 ms**                    | 101 ms                        |
+| Metric                    | JVM                      | Best native                   | Production (`dynamic / -O3`) |
+| ------------------------- | ------------------------ | ----------------------------- | ---------------------------- |
+| Build time (median)       | **5.75 s**               | 60.65 s (`dynamic / -Ob`)     | 110.95 s                     |
+| Startup time (median)     | 1,809 ms                 | **33 ms** (several combos)    | 33 ms                        |
+| Artifact size             | 49.3 MB _(jar only)_     | **65.4 MB** (`dynamic / -Os`) | 142.1 MB                     |
+| Idle memory (RSS, median) | 252.4 MB                 | **79.0 MB** (`dynamic / -Os`) | 106.7 MB                     |
+| Peak CPU at startup       | **790 %** _(multi-core)_ | ~80 % _(single core)_         | ~80 %                        |
+| Time to idle (CPU < 1 %)  | 2,251 ms                 | **101 ms**                    | 101 ms                       |
 
 The JVM is superior on exactly one dimension — build time — where its advantage is substantial. Native image dominates the remaining dimensions by margins large enough that the ordering is unambiguous without formal significance testing: startup is reduced by approximately 55× (subject to the measurement caveat below), and idle memory by approximately 3×.
 
@@ -144,25 +158,26 @@ That the two frontiers disagree is not incidental; the disagreement constitutes 
 
 ## Recommendations
 
-| Objective                                        | Configuration                              | Rationale                                                                  |
-| ------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------------------- |
-| **Best all-round** (size, speed, reproducibility)| `static-musl / -O1`                        | ~86 MB, 33 ms, low build variance; well placed on both frontiers.         |
-| **Minimal build time**                           | `dynamic / -Ob`                            | 60.6 s build, the lowest; 40 ms startup.                                  |
-| **Minimal binary size**                          | `dynamic / -Os`                            | 65.4 MB, at the cost of the slowest startup (56 ms) and most startup CPU. |
-| **Minimal startup**                              | `dynamic / -O3` or any `static-*` `-O1`+   | All ~33 ms; `static-musl / -O1` achieves this at lower memory.            |
-| **Maximal build reproducibility**                | `static-nolibc / -O3`                      | Lowest build-time coefficient of variation.                               |
-| **Current production**                           | `dynamic / -O3`                            | Minimal startup, at a cost in build time (111 s) and size (142 MB).       |
+| Objective                                         | Configuration                            | Rationale                                                                 |
+| ------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------- |
+| **Best all-round** (size, speed, reproducibility) | `static-musl / -O1`                      | ~86 MB, 33 ms, low build variance; well placed on both frontiers.         |
+| **Minimal build time**                            | `dynamic / -Ob`                          | 60.6 s build, the lowest; 40 ms startup.                                  |
+| **Minimal binary size**                           | `dynamic / -Os`                          | 65.4 MB, at the cost of the slowest startup (56 ms) and most startup CPU. |
+| **Minimal startup**                               | `dynamic / -O3` or any `static-*` `-O1`+ | All ~33 ms; `static-musl / -O1` achieves this at lower memory.            |
+| **Maximal build reproducibility**                 | `static-nolibc / -O3`                    | Lowest build-time coefficient of variation.                               |
+| **Current production**                            | `dynamic / -O3`                          | Minimal startup, at a cost in build time (111 s) and size (142 MB).       |
 
 In the absence of a specific constraint, `static-musl / -O1` is the recommended default, with `dynamic / -O3` reserved for cases in which the marginal startup improvement is material. The server measured here is precisely such a case — relaunched once per editor session and otherwise idle, it is dominated by startup latency — and is consequently deployed on `dynamic / -O3`, accepting the longer build and larger binary in exchange for the fastest available start. Two configurations warrant explicit caution: `dynamic / -O3` where peak startup is not required, as it pairs the worst build time and size for little benefit, and `dynamic / -Os` where startup is at all relevant, as it combines the slowest startup with the greatest startup CPU consumption.
 
 {{< admonition warning "Threats to validity" >}}
+
 1. **Scope.** The study measures cold-start and idle cost; it does not measure throughput or tail latency under load, which require a separate workload generator.
 2. **Idle assumption.** Every memory and CPU figure characterizes a server awaiting input, not one servicing requests.
 3. **Environment.** The measurements were taken under Docker on Windows. A native Linux host (e.g. Hetzner or EC2) should preserve the relative ordering, but absolute values — JVM startup in particular — will differ.
 4. **Single execution.** No configuration failed, so the data do not differentiate configurations on stability; this is reassuring but not conclusive.
 5. **Interpretation of the JVM CPU peak.** The 790 % peak indicates that the JVM parallelizes startup across roughly eight cores. Combined with its longer active window, this amounts to approximately 20× the total CPU-seconds native expends to reach the same state — its competitive wall-clock startup is fast, but not inexpensive.
 6. **JDK version of the baseline.** The JVM baseline runs on Java 21 rather than Java 25, a build constraint rather than a design choice: the application targets Spring Boot 4.0, which depended on a Maven plugin version that did not support Java 25, pinning the toolchain to Java 21. Spring Boot 4.1, released subsequently, adopts a newer Maven plugin version with Java 25 support, enabling a matched-JDK baseline in future runs. Given the magnitude of the differences reported here, a JDK minor-version change to the baseline would not alter the conclusions.
-{{< /admonition >}}
+   {{< /admonition >}}
 
 ## Future work
 
